@@ -73,3 +73,7 @@ body {
         width: 100%; /* Pleine largeur sur mobile */
     }
 }
+
+.navbar + .navbar {
+    margin: 0 !important; 
+}

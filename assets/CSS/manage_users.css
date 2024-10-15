@@ -1,0 +1,27 @@
+/* dashboard.css */
+
+/* Amélioration du tableau */
+.table {
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Espacement dans les formulaires */
+.form-select {
+    margin-bottom: 0;
+}
+
+.btn-success {
+    width: 100%;
+}
+
+/* Amélioration de la barre de recherche */
+.input-group {
+    width: 50%;
+    margin: 0 auto;
+}

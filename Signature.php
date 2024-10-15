@@ -26,9 +26,6 @@
         
     </div>
     <!-- FIN SIGNATURE -->
-
-
 <script src="assets/JS/script.js"></script>
-
 </body>
 </html>
