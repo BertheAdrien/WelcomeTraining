@@ -1,12 +1,12 @@
-<?php include('partials/header.php'); ?>
+<?php
+
+// Inclure l'en-tête (header.php) qui contient le <head> et les éléments communs
+include('partials/header.php');
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
 
 <body class="bg-light">
     <!-- Inclusion de la navbar -->
@@ -14,10 +14,10 @@
     <div class="container py-4">
         <div class="row mb-4">
             <div>
-                <h6>Prénom de l'élève connecté</h6>
+                <h6>Prénom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['first_name']); ?></h6>
             </div>
             <div>
-                <h6>Nom de l'élève connecté</h6>
+                <h6>Nom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['last_name']); ?></h6>
             </div>
             <div>
                 <h6><?php echo date('d-m-Y'); ?></h6>
@@ -56,11 +56,11 @@
                 </div>
             </div>
 
-            <!-- Cours Giles -->
+            <!-- Cours Gilles -->
             <div class="col-12 d-flex justify-content-center">
                 <div class="card shadow-sm cours-bloc" style="max-width: 400px; width: 100%;">
                     <div class="card-body">
-                        <h2 class="card-title">Giles</h2>
+                        <h2 class="card-title">Gilles</h2>
                         <h4 class="card-text">Heure début : </h4>
                         <h4 class="card-text">Heure fin : </h4>
                         <a href="signature.php" class="btn btn-primary mt-3 w-100">Signer</a>

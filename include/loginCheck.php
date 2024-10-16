@@ -39,4 +39,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Email de compte non trouvé.";
     }
 }
+
 ?>

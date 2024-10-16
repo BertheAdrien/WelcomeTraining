@@ -1,7 +1,7 @@
 <?php
-include 'include/Config.php';
+include 'include/Config.php'; // Assure-toi que la connexion à la base de données est bien incluse ici
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['class_id'])) {
+if (isset($_POST['class_id'])) {
     $classId = $_POST['class_id'];
 
     // Requête pour obtenir les élèves associés à la classe
@@ -11,16 +11,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['class_id'])) {
         INNER JOIN User ON User.idUser = User_has_Class.User_idUser
         WHERE User_has_Class.Class_idClasse = :classId
     ");
-    $stmt->bindParam(':classId', $classId);
+    $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
     $stmt->execute();
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Vérifier si des élèves sont associés à la classe
     if ($students) {
         foreach ($students as $student) {
-            echo '<li class="list-group-item">' . htmlspecialchars($student['FirstName']) . ' ' . htmlspecialchars($student['LastName']) . ' (' . htmlspecialchars($student['Email']) . ')</li>';
+            echo '<li class="list-group-item">'
+                . htmlspecialchars($student['FirstName']) . ' '
+                . htmlspecialchars($student['LastName']) . ' (' 
+                . htmlspecialchars($student['Email']) . ')'
+                . '</li>';
         }
     } else {
         echo '<li class="list-group-item">Aucun élève dans cette classe.</li>';
     }
+} else {
+    echo '<li class="list-group-item">Erreur: Classe non spécifiée.</li>';
 }
 ?>

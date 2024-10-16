@@ -1,8 +1,7 @@
-<?php include('partials/header.php'); ?>
-
-<?php
-// Inclure la configuration et la connexion à la base de données
-include 'include/Config.php';
+<?php 
+$title = 'Gestion des utilisateurs';
+include('partials/header.php'); 
+include('include/updateStatus.php');
 
 // Récupérer les utilisateurs depuis la base de données
 $search = isset($_POST['search']) ? $_POST['search'] : '';
@@ -31,43 +30,6 @@ function getUserClasses($userId, $pdo) {
     return $classStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Traitement de la mise à jour du statut de l'utilisateur
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
-    $userId = $_POST['user_id'];
-    $newStatus = $_POST['status'];
-    $newClassId = $_POST['class_id'];
-
-    // Mettre à jour le statut de l'utilisateur
-    $updateStmt = $pdo->prepare("UPDATE User SET Status = :status WHERE idUser = :idUser");
-    $updateStmt->bindParam(':status', $newStatus);
-    $updateStmt->bindParam(':idUser', $userId);
-    $updateStmt->execute();
-
-    // Ajouter l'utilisateur à une nouvelle classe si sélectionnée
-    if ($newClassId != 'none') {
-        // Vérifier si l'utilisateur est déjà assigné à cette classe
-        $checkClassStmt = $pdo->prepare("
-            SELECT * FROM User_has_Class WHERE User_idUser = :userId AND Class_idClasse = :classId
-        ");
-        $checkClassStmt->bindParam(':userId', $userId);
-        $checkClassStmt->bindParam(':classId', $newClassId);
-        $checkClassStmt->execute();
-
-        // Si l'utilisateur n'est pas encore dans cette classe, l'ajouter
-        if ($checkClassStmt->rowCount() === 0) {
-            $classAssignStmt = $pdo->prepare("
-                INSERT INTO User_has_Class (User_idUser, Class_idClasse) VALUES (:userId, :classId)
-            ");
-            $classAssignStmt->bindParam(':userId', $userId);
-            $classAssignStmt->bindParam(':classId', $newClassId);
-            $classAssignStmt->execute();
-        }
-    }
-
-    header('Location: manage_users.php');
-    exit();
-}
-
 // Suppression d'une classe pour un utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
     $userId = $_POST['user_id'];
@@ -83,15 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gérer les utilisateurs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/CSS/manage_users.css"> 
-</head>
+
+
 <body class="bg-light">
     <div class="container py-4">
         <h1 class="text-center mb-4">Gestion des utilisateurs</h1>
@@ -126,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
                             <td>
                                 <!-- Formulaire pour la mise à jour du statut de l'utilisateur -->
                                 <select name="status" class="form-select">
-                                    <option value="User" <?php if ($user['Status'] == 'User') echo 'selected'; ?>>Student</option>
+                                    <option value="Student" <?php if ($user['Status'] == 'Student') echo 'selected'; ?>>Student</option>
                                     <option value="Admin" <?php if ($user['Status'] == 'Admin') echo 'selected'; ?>>Admin</option>
                                     <option value="Prof" <?php if ($user['Status'] == 'Prof') echo 'selected'; ?>>Prof</option>
                                 </select>
@@ -148,19 +106,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
                                             </form>';
                                             echo '</div>';
                                         }
-                                    } else {
-                                        echo "Aucune classe";
-                                    }
+                                    } 
                                     ?>
                                 </div>
 
-                                <!-- Sélection d'une nouvelle classe -->
-                                <select name="class_id" class="form-select mt-2">
-                                    <option value="none">Aucune</option>
-                                    <?php foreach ($classes as $class) : ?>
-                                        <option value="<?php echo $class['idClasse']; ?>"><?php echo htmlspecialchars($class['ClassName']); ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <!-- Si l'utilisateur n'a pas de classe, afficher le menu déroulant -->
+                                <?php if (empty($userClasses)) : ?>
+                                    <select name="class_id" class="form-select mt-2">
+                                        <option value="none">Aucune</option>
+                                        <?php foreach ($classes as $class) : ?>
+                                            <option value="<?php echo $class['idClasse']; ?>"><?php echo htmlspecialchars($class['ClassName']); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <!-- Bouton Mettre à jour -->
