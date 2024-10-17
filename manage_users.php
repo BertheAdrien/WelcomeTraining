@@ -18,17 +18,7 @@ $classStmt->execute();
 $classes = $classStmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fonction pour récupérer les classes associées à un utilisateur
-function getUserClasses($userId, $pdo) {
-    $classStmt = $pdo->prepare("
-        SELECT Class.ClassName, Class.idClasse
-        FROM User_has_Class
-        INNER JOIN Class ON User_has_Class.Class_idClasse = Class.idClasse
-        WHERE User_has_Class.User_idUser = :userId
-    ");
-    $classStmt->bindParam(':userId', $userId);
-    $classStmt->execute();
-    return $classStmt->fetchAll(PDO::FETCH_ASSOC);
-}
+
 
 // Suppression d'une classe pour un utilisateur
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
@@ -90,36 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
                                 </select>
                             </td>
                             <td>
-                                <!-- Liste des classes déjà assignées avec suppression -->
-                                <div>
-                                    <?php
-                                    $userClasses = getUserClasses($user['idUser'], $pdo);
-                                    if (!empty($userClasses)) {
-                                        foreach ($userClasses as $class) {
-                                            echo '<div class="d-flex justify-content-between align-items-center">';
-                                            echo htmlspecialchars($class['ClassName']);
-                                            echo '
-                                            <form method="POST" class="d-inline-block ms-2">
-                                                <input type="hidden" name="user_id" value="' . $user['idUser'] . '">
-                                                <input type="hidden" name="class_id" value="' . $class['idClasse'] . '">
-                                                <button type="submit" name="delete_class" class="btn btn-danger btn-sm">✖</button>
-                                            </form>';
-                                            echo '</div>';
-                                        }
-                                    } 
-                                    ?>
-                                </div>
-
-                                <!-- Si l'utilisateur n'a pas de classe, afficher le menu déroulant -->
-                                <?php if (empty($userClasses)) : ?>
-                                    <select name="class_id" class="form-select mt-2">
-                                        <option value="none">Aucune</option>
-                                        <?php foreach ($classes as $class) : ?>
-                                            <option value="<?php echo $class['idClasse']; ?>"><?php echo htmlspecialchars($class['ClassName']); ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                <?php endif; ?>
+                            <!-- Lien pour gérer les classes d'un utilisateur dans une nouvelle page -->
+                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">
+                                    Gérer les classes
+                                </a>
                             </td>
+
                             <td>
                                 <!-- Bouton Mettre à jour -->
                                 <input type="hidden" name="user_id" value="<?php echo $user['idUser']; ?>">

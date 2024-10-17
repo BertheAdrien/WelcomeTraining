@@ -7,9 +7,24 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
+function getUserClasses($userId, $pdo) {
+    $classStmt = $pdo->prepare("
+        SELECT Class.ClassName, Class.idClasse
+        FROM User_has_Class
+        INNER JOIN Class ON User_has_Class.Class_idClasse = Class.idClasse
+        WHERE User_has_Class.User_idUser = :userId
+    ");
+    $classStmt->bindParam(':userId', $userId);
+    $classStmt->execute();
+    return $classStmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 // Inclure la configuration de la base de données si nécessaire
 include 'include/Config.php';
-$title = isset($title) ? $title : 'Welcome training';?>
+$title = isset($title) ? $title : 'Welcome training';
+?>
+
 
 
 <!DOCTYPE html>
@@ -44,7 +59,7 @@ if ($_SESSION['user_status'] !== 'Admin') {
                     <a class="nav-link" href="#">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Login.php">Déconnexion</a>
+                    <a class="nav-link" href="Logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
@@ -77,7 +92,7 @@ if ($_SESSION['user_status'] === 'Admin') {
                     <a class="nav-link" href="manage_subjects.php">Gérer les matières</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Déconnexion</a> <!-- Bouton de déconnexion ajouté -->
+                    <a class="nav-link" href="logout.php">Déconnexion</a> <!-- Bouton de déconnexion ajouté -->
                 </li>
             </ul>
         </div>

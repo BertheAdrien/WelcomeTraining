@@ -1,8 +1,10 @@
 <?php
+
+session_start();
 // Inclure le fichier de connexion
 include 'Config.php';
 
-session_start();
+
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

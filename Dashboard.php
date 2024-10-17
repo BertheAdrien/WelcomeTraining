@@ -3,6 +3,7 @@
 // Inclure l'en-tête (header.php) qui contient le <head> et les éléments communs
 include('partials/header.php');
 
+
 ?>
 
 <!DOCTYPE html>
@@ -14,10 +15,10 @@ include('partials/header.php');
     <div class="container py-4">
         <div class="row mb-4">
             <div>
-                <h6>Prénom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['first_name']); ?></h6>
+                <h6>Prénom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['FirstName']); ?></h6>
             </div>
             <div>
-                <h6>Nom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['last_name']); ?></h6>
+                <h6>Nom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['LastName']); ?></h6>
             </div>
             <div>
                 <h6><?php echo date('d-m-Y'); ?></h6>
