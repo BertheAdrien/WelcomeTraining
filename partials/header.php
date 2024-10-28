@@ -1,12 +1,13 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['idUser'])) {
     header('Location: Login.php');
     exit();
 }
-
 
 function getUserClasses($userId, $pdo) {
     $classStmt = $pdo->prepare("
@@ -34,7 +35,10 @@ $title = isset($title) ? $title : 'Welcome training';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($title); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="assets/CSS/dashboard.css">
+    
+
 
 </head>
 <body>
@@ -46,7 +50,7 @@ if ($_SESSION['user_status'] !== 'Admin') {
 <!-- Navbar générale pour tous les utilisateurs -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Welcome Training</a>
+        <a class="navbar-brand" href="dashboard.php">Welcome Training</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

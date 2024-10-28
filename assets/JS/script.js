@@ -2,7 +2,7 @@ const canvas = document.getElementById('signatureCanvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-// Résolution souhaitée (par exemple, pour un affichage Retina avec une densité 2x)
+// Résolution souhaitée (pour un affichage Retina)
 const scale = window.devicePixelRatio || 1;
 
 // Taille physique du canvas (ce que l'utilisateur voit)
@@ -22,11 +22,25 @@ ctx.scale(scale, scale);
 
 // Paramètres personnalisés pour un trait lisse
 ctx.strokeStyle = 'black';  // Couleur noire
-ctx.lineWidth = 1;  // Épaisseur de 1px
+ctx.lineWidth = 2;  // Épaisseur de 2px
 ctx.lineCap = 'round';  // Extrémités arrondies
 ctx.lineJoin = 'round';  // Jointures arrondies
 
-// Corriger les bugs d'effacement et forcer une remise à zéro
+function fillCanvasBackground() {
+    ctx.fillStyle = 'white';  // Couleur de fond
+    ctx.fillRect(0, 0, canvas.width / scale, canvas.height / scale);  // Remplir le rectangle
+}
+
+// Appeler cette fonction lors de l'initialisation
+fillCanvasBackground();  // Remplir le fond du canvas au début
+
+// Effacer le canvas avec un fond blanc
+function clearCanvas() {
+    fillCanvasBackground();  // Remplir avec un fond blanc à chaque effacement
+    ctx.clearRect(0, 0, canvas.width / scale, canvas.height / scale);  // Effacer avec la bonne échelle
+}
+
+// Effacer le canvas
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width / scale, canvas.height / scale);  // Effacer avec la bonne échelle
 }
@@ -35,13 +49,15 @@ function clearCanvas() {
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    ctx.moveTo((e.offsetX || (e.clientX - canvas.getBoundingClientRect().left)), 
+                (e.offsetY || (e.clientY - canvas.getBoundingClientRect().top)));
 });
 
 // Dessine pendant que la souris se déplace
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY); //position
+        ctx.lineTo((e.offsetX || (e.clientX - canvas.getBoundingClientRect().left)), 
+                    (e.offsetY || (e.clientY - canvas.getBoundingClientRect().top)));
         ctx.stroke(); // le trait
     }
 });
@@ -52,28 +68,62 @@ canvas.addEventListener('mouseup', () => {
     ctx.closePath();
 });
 
+document.getElementById('returnButton').addEventListener('click', () => {
+    window.location.href = 'dashboard.php'; // Redirige vers dashboard.php
+});
+
 // Efface le contenu du canvas
 document.getElementById('clearButton').addEventListener('click', () => {
     clearCanvas();
 });
 
-// Sauvegarde la signature en tant qu'image PNG et cache l'interface
+
+
+// Fonction pour sauvegarder la signature
 document.getElementById('saveButton').addEventListener('click', () => {
-    const image = canvas.toDataURL("image/png");
-    const savedSignature = document.getElementById('savedSignature');
-    savedSignature.src = image;
-    savedSignature.style.display = 'block';
+    // Convertir le canvas en image JPG
+    const imageData = canvas.toDataURL('image/jpeg');
 
-    // Cacher l'interface de signature
-    canvas.style.display = 'none';
-    document.getElementById('clearButton').style.display = 'none';
-    document.getElementById('saveButton').style.display = 'none';
+    // Préparer les données à envoyer
+    const signatureData = {
+        imageData: imageData
+    };
 
-    // Afficher le bouton "Retour"
-    document.getElementById('returnButton').style.display = 'block';
+    // Envoyer les données à un script PHP
+    fetch('saveSignature.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signatureData),
+    })
+    .then(response => {
+        // Vérifie si la réponse est au format JSON
+        return response.text(); // Utilise text() au lieu de json() pour voir la réponse brute
+    })
+    .then(data => {console
+        try {
+            const jsonData = JSON.parse(data); // Essaye de parser la réponse
+            
+            // Vérifie si la réponse contient une confirmation de succès
+            if (jsonData.status === 'success') {
+                // Afficher le modal de succès
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+
+                // Redirection après la fermeture du modal
+                document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                    window.location.href = 'dashboard.php'; // Redirige vers dashboard.php
+                });
+            } else {
+                alert('Erreur : ' + jsonData.message); // Affiche un message d'erreur
+            }
+        } catch (e) {
+            alert('Erreur lors de la soumission de la signature.'); // Pop-up d'erreur
+        }
+    })
+    .catch((error) => {
+        alert('Erreur de connexion. Veuillez réessayer.'); // Pop-up d'erreur
+    });
 });
 
-// Bouton retour pour rediriger vers index.php
-document.getElementById('returnButton').addEventListener('click', () => {
-    window.location.href = 'Dashboard.php';
-});

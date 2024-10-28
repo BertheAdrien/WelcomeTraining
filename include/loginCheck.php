@@ -1,10 +1,7 @@
 <?php
-
 session_start();
 // Inclure le fichier de connexion
 include 'Config.php';
-
-
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,8 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Vérifier si le mot de passe est correct
         if (password_verify($motdepasse, $user['Password'])) {
             
-            $_SESSION['user_id'] = $user['idUser']; // Assurez-vous d'utiliser le bon champ
-            $_SESSION['user_status'] = $user['Status']; // Assurez-vous d'utiliser le bon champ
+            $_SESSION['idUser'] = $user['idUser']; 
+            $_SESSION['user_status'] = $user['Status']; 
+            $_SESSION['first_name'] = $user['FirstName'];
+            $_SESSION['last_name'] = $user['LastName'];
+            
+
+            
 
             if ($_SESSION['user_status'] === 'Admin') {
                 header('Location: manage_users.php'); 
@@ -41,5 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Email de compte non trouvé.";
     }
 }
+
+
 
 ?>

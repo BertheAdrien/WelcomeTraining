@@ -1,10 +1,4 @@
-<?php
-
-// Inclure l'en-tête (header.php) qui contient le <head> et les éléments communs
-include('partials/header.php');
-
-
-?>
+<?php include('partials/header.php');?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,11 +9,10 @@ include('partials/header.php');
     <div class="container py-4">
         <div class="row mb-4">
             <div>
-                <h6>Prénom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['FirstName']); ?></h6>
+                <h4>Bonjour <?php echo htmlspecialchars($_SESSION['first_name']) . ' ' . htmlspecialchars($_SESSION['last_name']); ?></h4>
+
             </div>
-            <div>
-                <h6>Nom de l'élève connecté: <?php echo htmlspecialchars($_SESSION['LastName']); ?></h6>
-            </div>
+
             <div>
                 <h6><?php echo date('d-m-Y'); ?></h6>
             </div>
@@ -73,7 +66,6 @@ include('partials/header.php');
 
     <!-- Bootstrap JS (optionnel) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="assets/JS/dashboard.js"></script>
+
 </body>
 </html>
