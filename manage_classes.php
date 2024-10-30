@@ -17,6 +17,13 @@ $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container py-4">
         <h1 class="text-center mb-4">Gestion des classes</h1>
 
+            <!-- Formulaire pour ajouter une nouvelle classe -->
+        <h2 class="mt-4">Ajouter une nouvelle classe</h2>
+        <form method="POST" action="class_actions.php" class="d-flex mb-4">
+            <input type="text" name="class_name" class="form-control me-2" placeholder="Nom de la nouvelle classe" required>
+            <button type="submit" name="add_class" class="btn btn-primary">Ajouter</button>
+        </form>
+
         <!-- Liste des classes -->
         <h2>Classes existantes</h2>
         <table class="table table-bordered">
@@ -47,12 +54,7 @@ $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </tbody>
         </table>
 
-        <!-- Formulaire pour ajouter une nouvelle classe -->
-        <h2 class="mt-4">Ajouter une nouvelle classe</h2>
-        <form method="POST" action="class_actions.php" class="d-flex mb-4">
-            <input type="text" name="class_name" class="form-control me-2" placeholder="Nom de la nouvelle classe" required>
-            <button type="submit" name="add_class" class="btn btn-primary">Ajouter</button>
-        </form>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

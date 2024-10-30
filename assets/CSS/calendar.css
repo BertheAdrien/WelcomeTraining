@@ -1,0 +1,53 @@
+/* assets/css/calendar.css */
+#calendar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#calendar {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#calendar .fc-toolbar-title {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+#calendar .fc-event {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* Masquer les heures avant 6h */
+.fc-timegrid-slot[day^="dim.:"],
+.fc-timegrid-slot[data-time^="00:"],
+.fc-timegrid-slot[data-time^="01:"],
+.fc-timegrid-slot[data-time^="02:"],
+.fc-timegrid-slot[data-time^="03:"],
+.fc-timegrid-slot[data-time^="04:"],
+.fc-timegrid-slot[data-time^="05:"],
+/* Masquer les heures après 20h */
+.fc-timegrid-slot[data-time^="21:"],
+.fc-timegrid-slot[data-time^="22:"],
+.fc-timegrid-slot[data-time^="23:"] {
+    display: none;
+}
+
+
+#calendar .fc-button-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#calendar .fc-button-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+

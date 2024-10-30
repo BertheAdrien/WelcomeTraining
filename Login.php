@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="mt-3 text-center">
-                    <a href="#">Mot de passe oublié ?</a>
+                    <a href="Signup.php">Créer un compte</a>
                 </div>
             </div>
         </div>

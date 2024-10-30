@@ -1,6 +1,7 @@
 <?php 
+
 $title = 'Gestion des utilisateurs';
-include('partials/header.php'); 
+include('partials/header.php');     
 include('include/updateStatus.php');
 
 // Récupérer les utilisateurs depuis la base de données
@@ -38,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 
 <body class="bg-light">
     <div class="container py-4">

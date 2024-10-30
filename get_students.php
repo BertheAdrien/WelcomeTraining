@@ -1,5 +1,5 @@
 <?php
-include 'include/Config.php'; // Assure-toi que la connexion à la base de données est bien incluse ici
+include 'include/Config.php'; 
 
 if (isset($_POST['class_id'])) {
     $classId = $_POST['class_id'];
