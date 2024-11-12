@@ -25,7 +25,7 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $events = [];
 foreach ($courses as $course) {
     $events[] = [
-        'title' => "{$course['SubName']} - {$course['TeacherName']} ({$course['ClassName']})",
+        'title' => "{$course['SubName']} \n{$course['TeacherName']} \n({$course['ClassName']})",
         'start' => $course['StartDateTime'],
         'end' => $course['EndDateTime'],
     ];

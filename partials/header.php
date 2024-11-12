@@ -61,10 +61,10 @@ if ($_SESSION['user_status'] !== 'Admin') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Mes cours</a>
+                    <a class="nav-link active" href="Dashboard.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profil</a>
+                    <a class="nav-link" href="view_shedule.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Logout.php">Déconnexion</a>
@@ -100,7 +100,7 @@ if ($_SESSION['user_status'] === 'Admin') {
                     <a class="nav-link" href="manage_subjects.php">Gérer les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_shedule.php">Voir les cours</a>
+                    <a class="nav-link" href="view_shedule_admin.php">Voir les cours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Déconnexion</a> <!-- Bouton de déconnexion ajouté -->

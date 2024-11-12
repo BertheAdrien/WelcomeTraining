@@ -24,15 +24,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_status'] = $user['Status']; 
             $_SESSION['first_name'] = $user['FirstName'];
             $_SESSION['last_name'] = $user['LastName'];
-            
 
-            
+            // Requête pour récupérer la classe de l'élève
+            $query = "
+                SELECT c.ClassName 
+                FROM Class c
+                JOIN user_has_class uc ON c.idClasse = uc.Class_idClasse
+                WHERE uc.user_idUser = :userID";
 
+            $classStmt = $pdo->prepare($query);
+            $classStmt->bindParam(':userID', $user['idUser'], PDO::PARAM_INT);
+            $classStmt->execute();
+
+            $class = $classStmt->fetch(PDO::FETCH_ASSOC);
+
+            // Vérifier si une classe a été trouvée et la stocker dans la session
+            if ($class) {
+                $_SESSION['class_name'] = $class['ClassName'];
+            } else {
+                $_SESSION['class_name'] = null; // Optionnel : Si aucune classe n'est trouvée
+            }
+
+            // Redirection en fonction du statut de l'utilisateur
             if ($_SESSION['user_status'] === 'Admin') {
                 header('Location: manage_users.php'); 
-            }else if ($_SESSION['user_status'] === 'Prof'){
+            } else if ($_SESSION['user_status'] === 'Prof') {
                 header('Location: Prof.php'); 
-            }else{
+            } else {
                 header('Location: Dashboard.php');
             }
             exit();
@@ -43,7 +61,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Email de compte non trouvé.";
     }
 }
-
-
-
 ?>

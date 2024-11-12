@@ -10,7 +10,7 @@
         <div class="row mb-4">
             <div>
                 <h4>Bonjour <?php echo htmlspecialchars($_SESSION['first_name']) . ' ' . htmlspecialchars($_SESSION['last_name']); ?></h4>
-
+                <h5><?php echo htmlspecialchars($_SESSION['class_name']) ?></h5>
             </div>
 
             <div>
