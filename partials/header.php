@@ -26,8 +26,6 @@ include 'include/Config.php';
 $title = isset($title) ? $title : 'Welcome training';
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +62,7 @@ if ($_SESSION['user_status'] !== 'Admin') {
                     <a class="nav-link active" href="Dashboard.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_shedule.php">Calendrier</a>
+                    <a class="nav-link" href="view_shedule_student.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Logout.php">Déconnexion</a>

@@ -1,6 +1,24 @@
-<?php include('partials/header.php');?>
+<?php
 
+include('include/Config.php');
+include('partials/header.php');
 
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['idUser'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Utilisateur non connecté']);
+    exit();
+}
+
+// Récupérer l'ID du cours depuis l'URL
+if (!isset($_GET['idCourse']) || empty($_GET['idCourse'])) {
+    echo json_encode(['status' => 'error', 'message' => 'ID du cours manquant']);
+    exit();
+}
+
+$idCourse = intval($_GET['idCourse']); // Assurez-vous de convertir en entier pour des raisons de sécurité
+
+// Maintenant, vous pouvez utiliser $idCourse dans votre logique pour insérer la signature ou effectuer des opérations liées au cours
+?>
 
 <!DOCTYPE html>
 <html lang="fr">

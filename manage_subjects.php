@@ -22,34 +22,47 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button type="submit" name="add_subject" class="btn btn-primary">Ajouter</button>
         </form>
         
+        <!-- Bouton pour modifier les cours -->
+        <div class="text-center mb-4">
+            <a href="edit_courses.php" class="btn btn-warning">Modifier les cours</a>
+        </div>
+
         <!-- Liste des matières -->
         <h2>Matières existantes</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Nom de la matière</th>
-                    <th>Action</th>
+                    <th>Affecter un cours</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($subjects as $subject) : ?>
-                    <tr>
-                        <!-- Nom de la matière cliquable pour affecter un cours -->
-                        <td>
-                            <a href="#" class="subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>">
-                                <?php echo htmlspecialchars($subject['SubName']); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <!-- Formulaire pour supprimer une matière -->
-                            <form method="POST" action="subject_actions.php" style="display:inline-block;">
-                                <input type="hidden" name="subject_id" value="<?php echo $subject['idSubject']; ?>">
-                                <button type="submit" name="delete_subject" class="btn btn-danger">✖</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+    <?php foreach ($subjects as $subject) : ?>
+        <tr>
+            <!-- Nom de la matière cliquable pour affecter un cours -->
+            <td>
+                <a href="#" class="subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>">
+                    <?php echo htmlspecialchars($subject['SubName']); ?>
+                </a>
+            </td>
+            <!-- Bouton pour affecter un cours -->
+            <td>
+                <button type="button" class="btn btn-secondary subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>">
+                    Affecter un cours
+                </button>
+            </td>
+            <!-- Formulaire pour supprimer une matière -->
+            <td>
+                <form method="POST" action="subject_actions.php" style="display:inline-block;">
+                    <input type="hidden" name="subject_id" value="<?php echo $subject['idSubject']; ?>">
+                    <button type="submit" name="delete_subject" class="btn btn-danger">✖</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
         </table>
     </div>
 
@@ -113,5 +126,21 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Succès</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Cours affecté avec succès !
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

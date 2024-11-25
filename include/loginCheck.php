@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Requête pour récupérer la classe de l'élève
             $query = "
-                SELECT c.ClassName 
+                SELECT c.ClassName, c.idClasse
                 FROM Class c
                 JOIN user_has_class uc ON c.idClasse = uc.Class_idClasse
                 WHERE uc.user_idUser = :userID";
@@ -41,8 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Vérifier si une classe a été trouvée et la stocker dans la session
             if ($class) {
                 $_SESSION['class_name'] = $class['ClassName'];
+                $_SESSION['class_id'] = $class['idClasse'];
             } else {
                 $_SESSION['class_name'] = null; // Optionnel : Si aucune classe n'est trouvée
+                $_SESSION['class_id'] = null;
             }
 
             // Redirection en fonction du statut de l'utilisateur
