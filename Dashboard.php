@@ -22,21 +22,6 @@ $stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
 $stmt->bindParam(':currentDateTime', $currentDateTime, PDO::PARAM_STR);
 $stmt->execute();
 $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-foreach ($courses as $course) {
-    $endTime = strtotime($course['EndDateTime']);
-    $now = strtotime($currentDateTime);
-
-    // Si le cours est terminé, réinitialisez le statut
-    if ($now > $endTime) {
-        $queryUpdateStatus = "UPDATE signature SET statut = 'absent' WHERE idCourse = :idCourse AND idUser = :idUser AND statut = 'présent'";
-        $stmtUpdateStatus = $pdo->prepare($queryUpdateStatus);
-        $stmtUpdateStatus->bindParam(':idCourse', $course['idCourse'], PDO::PARAM_INT);
-        $stmtUpdateStatus->bindParam(':idUser', $_SESSION['idUser'], PDO::PARAM_INT);
-        $stmtUpdateStatus->execute();
-    }
-}
 ?>
 
 <!DOCTYPE html>

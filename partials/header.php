@@ -47,7 +47,7 @@ $title = isset($title) ? $title : 'Welcome training';
 
 <?php
 // Si l'utilisateur n'est pas admin, afficher la navbar générale utilisateur
-if ($_SESSION['user_status'] !== 'Admin') {
+if ($_SESSION['user_status'] === 'student') {
 ?>
 <!-- Navbar générale pour tous les utilisateurs -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
@@ -63,6 +63,36 @@ if ($_SESSION['user_status'] !== 'Admin') {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="view_shedule_student.php">Calendrier</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Logout.php">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<?php
+}
+?>
+
+<?php
+// Si l'utilisateur n'est pas admin, afficher la navbar générale utilisateur
+if ($_SESSION['user_status'] === 'Prof') {
+?>
+<!-- Navbar générale pour tous les utilisateurs -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="dashboard.php">Welcome Training</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="dashboardProf.php">Mes cours</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="viewSheduleProf.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Logout.php">Déconnexion</a>

@@ -1,29 +1,33 @@
 <?php
-include 'Config.php';
+include 'Config.php'; // Vérifiez que $pdo est correctement configuré ici
+include 'classes/user.php';
 
+
+// Vérification si le formulaire est soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $email = $_POST['email'];
-    $motdepasse = $_POST['motdepasse'];
+    // Validation des données du formulaire
+    $nom = trim($_POST['nom']);
+    $prenom = trim($_POST['prenom']);
+    $email = trim($_POST['email']);
+    $motdepasse = trim($_POST['motdepasse']);
 
-    // Hachage du mot de passe
-    $hashedPassword = password_hash($motdepasse, PASSWORD_DEFAULT);
-
-    $stmt = $pdo->prepare("INSERT INTO User (LastName, FirstName, Email, Password) VALUES (:nom, :prenom, :email, :motdepasse)");
-    
-    $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':prenom', $prenom);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':motdepasse', $hashedPassword);
-
-
-    if ($stmt->execute()) {
-        echo "<div class='alert alert-success'>Inscription réussie !</div>";
-        header("Location: Login.php");
-        exit();
+    if (empty($nom) || empty($prenom) || empty($email) || empty($motdepasse)) {
+        echo "<div class='alert alert-danger'>Tous les champs sont obligatoires.</div>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<div class='alert alert-danger'>L'adresse e-mail est invalide.</div>";
     } else {
-        echo "<div class='alert alert-danger'>Erreur lors de l'inscription.</div>";
+        // Instance de la classe User
+        $user = new User($pdo);
+
+        // Création de l'utilisateur
+        if ($user->createUser($nom, $prenom, $email, $motdepasse)) {
+            // Si réussi, redirection vers la page de connexion
+            header("Location: Login.php?success=1");
+            exit();
+        } else {
+            // En cas d'erreur
+            echo "<div class='alert alert-danger'>Erreur lors de l'inscription. Veuillez réessayer.</div>";
+        }
     }
 }
 ?>

@@ -48,31 +48,21 @@ try {
         throw new Exception('Erreur lors de la sauvegarde de la signature : ' . $stmt->error);
     }
 
-    // Préparer la requête de mise à jour du statut
-    $stmtPresence = $conn->prepare("UPDATE user SET Presence = 'Present' WHERE idUser = ?");
-    $stmtPresence->bind_param('i', $idUser);
-
-    if (!$stmtPresence->execute()) {
-        throw new Exception('Erreur lors de la mise à jour du statut de présence : ' . $stmtPresence->error);
-    }
-
     // Valider la transaction
     $conn->commit();
-    echo json_encode(['status' => 'success', 'message' => 'Signature sauvegardée et statut mis à jour']);
+    echo json_encode(['status' => 'success', 'message' => 'Signature sauvegardée avec succès']);
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
     $conn->rollback();
     echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 } finally {
-    // Fermer les requêtes préparées
+    // Fermer la requête préparée
     if (isset($stmt) && $stmt instanceof mysqli_stmt) {
         $stmt->close();
-    }
-    if (isset($stmtPresence) && $stmtPresence instanceof mysqli_stmt) {
-        $stmtPresence->close();
     }
 
     // Fermer la connexion
     $conn->close();
 }
+
 ?>
