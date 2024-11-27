@@ -1,7 +1,8 @@
 <?php 
 $title = 'Gestion des classes de l\'utilisateur';
-include('partials/header.php');
-include 'include/Config.php';
+include_once('partials/header.php');
+include_once 'include/Config.php';
+include_once('include/pdo.php');
 
 // Récupérer l'ID de l'utilisateur depuis l'URL
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;

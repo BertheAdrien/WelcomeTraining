@@ -22,7 +22,7 @@ function getUserClasses($userId, $pdo) {
 }
 
 // Inclure la configuration de la base de données si nécessaire
-include 'include/Config.php';
+include_once 'include/Config.php';
 $title = isset($title) ? $title : 'Welcome training';
 ?>
 
@@ -47,7 +47,7 @@ $title = isset($title) ? $title : 'Welcome training';
 
 <?php
 // Si l'utilisateur n'est pas admin, afficher la navbar générale utilisateur
-if ($_SESSION['user_status'] === 'student') {
+if ($_SESSION['user_status'] === 'Student') {
 ?>
 <!-- Navbar générale pour tous les utilisateurs -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">

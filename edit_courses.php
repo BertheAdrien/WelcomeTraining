@@ -1,8 +1,9 @@
 <?php 
 
 $title = 'Gestion des utilisateurs';
-include('partials/header.php');     
-include('include/updateStatus.php');
+include_once('partials/header.php');     
+include_once('include/updateStatus.php');
+include_once('include/pdo.php');
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
 $query = "SELECT s.SubName, 

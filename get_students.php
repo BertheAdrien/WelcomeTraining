@@ -1,5 +1,6 @@
 <?php
-include 'include/Config.php'; 
+include_once 'include/Config.php'; 
+include_once('include/pdo.php');
 
 if (isset($_POST['class_id'])) {
     $classId = $_POST['class_id'];

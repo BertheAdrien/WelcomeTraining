@@ -1,7 +1,8 @@
 <?php
 
-include('include/Config.php');
-include('partials/header.php');
+include_once('include/Config.php');
+include_once('partials/header.php');
+include_once('include/pdo.php');
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['idUser'])) {

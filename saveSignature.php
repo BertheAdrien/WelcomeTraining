@@ -1,7 +1,7 @@
 <?php
 session_start();
-include('include/Config.php'); // Inclure la configuration de la base de données
-
+include_once('include/Config.php'); // Inclure la configuration de la base de données
+include_once('include/pdo.php');
 header('Content-Type: application/json'); // Définir le type de contenu comme JSON
 
 // Vérifier si l'utilisateur est connecté

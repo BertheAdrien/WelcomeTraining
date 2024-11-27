@@ -1,8 +1,9 @@
 <?php
 session_start(); 
 $title = 'Agenda';
-include('partials/header.php');     
-include('include/Config.php');
+include_once('partials/header.php');     
+include_once('include/Config.php');
+include_once('include/pdo.php');
 
 $isStudent = $_SESSION['user_status'] === 'Student';
 $classID = $_SESSION['class_id'];  // Récupérer le classID de l'élève depuis la session

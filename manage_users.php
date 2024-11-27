@@ -1,41 +1,43 @@
-<?php 
+<?php
+// Inclure les classes nécessaires
+include_once('include/config.php');
+include_once('classes/user.php');
+include_once('classes/classManager.php');
+include_once('classes/userController.php');
+include_once('partials/header.php');
+include_once('include/pdo.php');
 
-$title = 'Gestion des utilisateurs';
-include('partials/header.php');     
-include('include/updateStatus.php');
+// Créer les objets User et ClassManager
+$user = new User($pdo);
+$classManager = new ClassManager($pdo);
+$userController = new UserController($user, $classManager);
 
-// Récupérer les utilisateurs depuis la base de données
+// Récupérer les utilisateurs et les classes après modification
+
+// Gérer les actions
 $search = isset($_POST['search']) ? $_POST['search'] : '';
-$query = "SELECT * FROM User WHERE LastName LIKE :search OR FirstName LIKE :search OR Email LIKE :search";
-$stmt = $pdo->prepare($query);
-$searchParam = '%' . $search . '%';
-$stmt->bindParam(':search', $searchParam);
-$stmt->execute();
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupérer la liste des classes pour les assignations
-$classStmt = $pdo->prepare("SELECT * FROM Class");
-$classStmt->execute();
-$classes = $classStmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Fonction pour récupérer les classes associées à un utilisateur
-
-
-// Suppression d'une classe pour un utilisateur
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
-    $userId = $_POST['user_id'];
-    $classId = $_POST['class_id'];
-
-    $deleteStmt = $pdo->prepare("DELETE FROM User_has_Class WHERE User_idUser = :userId AND Class_idClasse = :classId");
-    $deleteStmt->bindParam(':userId', $userId);
-    $deleteStmt->bindParam(':classId', $classId);
-    $deleteStmt->execute();
-
-    header('Location: manage_users.php');
-    exit();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
+    $userController->handleUpdateStatus(
+        $_POST['user_id'],
+        $_POST['last_name'],
+        $_POST['first_name'],
+        $_POST['email'],
+        $_POST['status']
+    );
 }
-?>
 
+
+if (isset($_POST['delete_class'])) {
+    $userController->handleDeleteClass($_POST['user_id'], $_POST['class_id']);
+}
+
+
+// Récupérer les utilisateurs et les classes
+$users = $userController->handleSearch($search);
+$classes = $userController->getClasses();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,11 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
                 <?php foreach ($users as $user) : ?>
                     <tr>
                         <form method="POST">
-                            <td><?php echo htmlspecialchars($user['LastName']); ?></td>
-                            <td><?php echo htmlspecialchars($user['FirstName']); ?></td>
-                            <td><?php echo htmlspecialchars($user['Email']); ?></td>
                             <td>
-                                <!-- Formulaire pour la mise à jour du statut de l'utilisateur -->
+                                <input type="text" name="last_name" class="form-control" value="<?php echo htmlspecialchars($user['LastName']); ?>">
+                            </td>
+                            <td>
+                                <input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($user['FirstName']); ?>">
+                            </td>
+                            <td>
+                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['Email']); ?>">
+                            </td>
+                            <td>
                                 <select name="status" class="form-select">
                                     <option value="Student" <?php if ($user['Status'] == 'Student') echo 'selected'; ?>>Student</option>
                                     <option value="Admin" <?php if ($user['Status'] == 'Admin') echo 'selected'; ?>>Admin</option>
@@ -80,23 +87,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_class'])) {
                                 </select>
                             </td>
                             <td>
-                            <!-- Lien pour gérer les classes d'un utilisateur dans une nouvelle page -->
-                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">
-                                    Gérer les classes
-                                </a>
+                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">Affecter une classe</a>
                             </td>
-
                             <td>
-                                <!-- Bouton Mettre à jour -->
                                 <input type="hidden" name="user_id" value="<?php echo $user['idUser']; ?>">
                                 <button type="submit" name="update_user" class="btn btn-success">Mettre à jour</button>
                             </td>
                         </form>
                     </tr>
                 <?php endforeach; ?>
-
-
             </tbody>
+
         </table>
     </div>
 

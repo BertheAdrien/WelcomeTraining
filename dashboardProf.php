@@ -1,6 +1,7 @@
 <?php
-include('partials/header.php');
-include('include/Config.php');
+include_once('partials/header.php');
+include_once('include/Config.php');
+include_once('include/pdo.php');
 
 // Récupérer l'idUser de l'élève depuis la session
 $idUser = $_SESSION['idUser'];

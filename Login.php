@@ -1,5 +1,5 @@
 
-<?php include('include/loginCheck.php'); ?>
+<?php include_once('include/loginCheck.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">

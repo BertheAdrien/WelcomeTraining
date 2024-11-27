@@ -1,11 +1,14 @@
 <?php
 session_start();
-include 'Config.php';
-include 'classes/user.php';
+include_once 'Config.php';
+include_once 'classes/user.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['Email'];
     $password = $_POST['motdepasse'];
+
+    $database = new Database();
+    $pdo = $database->getPDO();
 
     // Initialiser la classe User
     $userModel = new User($pdo);

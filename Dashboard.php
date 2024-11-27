@@ -1,6 +1,7 @@
 <?php
 include('partials/header.php');
-include('include/Config.php');
+include_once('include/Config.php');
+include_once('include/pdo.php');
 
 // Récupérer le classID de l'élève depuis la session
 $classID = $_SESSION['class_id'];

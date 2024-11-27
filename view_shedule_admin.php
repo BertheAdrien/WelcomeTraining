@@ -2,8 +2,9 @@
 session_start(); 
 
 $title = 'Agenda';
-include('partials/header.php');     
-include('include/Config.php');
+include_once('partials/header.php');     
+include_once('include/Config.php');
+include_once('include/pdo.php');
 
 $isAdmin = $_SESSION['user_status'] === 'Admin';
     $course = "SELECT * FROM Course";

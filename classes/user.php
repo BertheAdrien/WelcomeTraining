@@ -8,6 +8,7 @@ class User {
     }
 
 
+
     public function loginUser($email, $password){
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM User WHERE Email = :email");
@@ -44,7 +45,7 @@ class User {
             return null;
         }
     }
-    
+
     public function createUser($lastName, $firstName, $email, $password) {     
         try {
             // Hashage du mot de passe
@@ -64,4 +65,46 @@ class User {
             return false;
         }
     }
+    public function getUsers($search = '') {
+        $query = "SELECT * FROM User WHERE LastName LIKE :search OR FirstName LIKE :search OR Email LIKE :search";
+        $stmt = $this->pdo->prepare($query);
+        $searchParam = '%' . $search . '%';
+        $stmt->bindParam(':search', $searchParam);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+        // Mettre à jour le statut d'un utilisateur
+    public function updateStatus($userId, $status) {
+        $query = "UPDATE User SET Status = :status WHERE idUser = :userId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':status', $status);
+        $stmt->execute();
+    }
+
+    // Supprimer une classe pour un utilisateur
+    public function deleteClass($userId, $classId) {
+        $query = "DELETE FROM User_has_Class WHERE User_idUser = :userId AND Class_idClasse = :classId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':classId', $classId);
+        $stmt->execute();
+    }
+
+    public function updateUser($userId, $lastName, $firstName, $email, $status) {
+        $query = "UPDATE User 
+                    SET LastName = :lastName, 
+                        FirstName = :firstName, 
+                        Email = :email, 
+                        Status = :status 
+                    WHERE idUser = :userId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':lastName', $lastName);
+        $stmt->bindParam(':firstName', $firstName);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':userId', $userId);        
+        $stmt->execute();
+    }
+        
 }

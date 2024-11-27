@@ -1,5 +1,6 @@
 <?php
-include('include/Config.php'); 
+include_once('include/Config.php'); 
+include_once('include/pdo.php');
 
 $classID = isset($_GET['classID']) ? intval($_GET['classID']) : 0;
 

@@ -1,5 +1,6 @@
 <?php
-include 'include/Config.php';
+include_once 'include/Config.php';
+include_once('include/pdo.php');
 
 // Ajouter une nouvelle matière
 if (isset($_POST['add_subject'])) {
