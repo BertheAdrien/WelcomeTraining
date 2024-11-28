@@ -1,5 +1,5 @@
 <?php
-include 'include/Config.php';
+include_once 'include/Config.php';
 include_once('include/pdo.php');
 
 // Traitement de l'ajout d'une nouvelle classe

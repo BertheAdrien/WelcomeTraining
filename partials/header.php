@@ -22,7 +22,7 @@ function getUserClasses($userId, $pdo) {
 }
 
 // Inclure la configuration de la base de données si nécessaire
-include_once 'include/Config.php';
+// include_once 'include/Config.php';
 $title = isset($title) ? $title : 'Welcome training';
 ?>
 
@@ -46,10 +46,11 @@ $title = isset($title) ? $title : 'Welcome training';
 <body>
 
 <?php
+$current_page = basename($_SERVER['PHP_SELF']); // Récupère le nom du fichier courant
 // Si l'utilisateur n'est pas admin, afficher la navbar générale utilisateur
 if ($_SESSION['user_status'] === 'Student') {
 ?>
-<!-- Navbar générale pour tous les utilisateurs -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand" href="dashboard.php">Welcome Training</a>
@@ -59,27 +60,28 @@ if ($_SESSION['user_status'] === 'Student') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="Dashboard.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'Dashboard.php' ? 'active font-weight-bold' : ''; ?>" href="Dashboard.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_shedule_student.php">Calendrier</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_student.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_student.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Logout.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="Logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <?php
 }
 ?>
 
 <?php
-// Si l'utilisateur n'est pas admin, afficher la navbar générale utilisateur
+
 if ($_SESSION['user_status'] === 'Prof') {
 ?>
-<!-- Navbar générale pour tous les utilisateurs -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand" href="dashboard.php">Welcome Training</a>
@@ -89,27 +91,27 @@ if ($_SESSION['user_status'] === 'Prof') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="dashboardProf.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'dashboardProf.php' ? 'active font-weight-bold' : ''; ?>" href="dashboardProf.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="viewSheduleProf.php">Calendrier</a>
+                    <a class="nav-link <?php echo $current_page === 'viewSheduleProf.php' ? 'active font-weight-bold' : ''; ?>" href="viewSheduleProf.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Logout.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="Logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <?php
 }
 ?>
 
 <?php
-// Si l'utilisateur est Admin, afficher une barre de navigation supplémentaire avec bouton de déconnexion
 if ($_SESSION['user_status'] === 'Admin') {
 ?>
-<!-- Navbar spéciale pour les administrateurs -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">Admin Panel</a>
@@ -119,24 +121,25 @@ if ($_SESSION['user_status'] === 'Admin') {
         <div class="collapse navbar-collapse" id="adminNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="manage_users.php">Gérer les utilisateurs</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_users.php' ? 'active font-weight-bold' : ''; ?>" href="manage_users.php">Gérer les utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="manage_classes.php">Gérer les classes</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="manage_classes.php">Gérer les classes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="manage_subjects.php">Gérer les cours</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="manage_subjects.php">Gérer les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view_shedule_admin.php">Voir les cours</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_admin.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_admin.php">Voir les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Déconnexion</a> <!-- Bouton de déconnexion ajouté -->
+                    <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active font-weight-bold' : ''; ?>" href="logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <?php
 }
 ?>

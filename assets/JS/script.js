@@ -68,62 +68,41 @@ canvas.addEventListener('mouseup', () => {
     ctx.closePath();
 });
 
-document.getElementById('returnButton').addEventListener('click', () => {
-    window.location.href = 'dashboard.php'; // Redirige vers dashboard.php
-});
-
 // Efface le contenu du canvas
 document.getElementById('clearButton').addEventListener('click', () => {
     clearCanvas();
 });
 
+// Fonction pour récupérer la signature du canvas et l'envoyer
+// Fonction pour récupérer la signature du canvas et l'envoyer
+// Quand l'utilisateur appuie sur le bouton "Envoyer"
+document.getElementById("saveButton").addEventListener("click", function(e) {
+    e.preventDefault(); // Empêche la soumission du formulaire immédiatement
 
+    // Récupérer les données du canvas en base64
+    var signatureData = document.getElementById("signatureCanvas").toDataURL("image/png");
 
-// Fonction pour sauvegarder la signature
-document.getElementById('saveButton').addEventListener('click', () => {
-    // Convertir le canvas en image JPG
-    const imageData = canvas.toDataURL('image/jpeg');
+    // Vérifier si la signature est vide
+    if (signatureData === "") {
+        alert("Veuillez dessiner une signature.");
+        return;
+    }
 
-    // Préparer les données à envoyer
-    const signatureData = {
-        imageData: imageData
-    };
+    // Remplir le champ caché avec la signature
+    document.getElementById("signatureData").value = signatureData;
 
-    // Envoyer les données à un script PHP
-    fetch('saveSignature.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signatureData),
-    })
-    .then(response => {
-        // Vérifie si la réponse est au format JSON
-        return response.text(); // Utilise text() au lieu de json() pour voir la réponse brute
-    })
-    .then(data => {console
-        try {
-            const jsonData = JSON.parse(data); // Essaye de parser la réponse
-            
-            // Vérifie si la réponse contient une confirmation de succès
-            if (jsonData.status === 'success') {
-                // Afficher le modal de succès
-                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
+    // Afficher la modale de succès
+    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    successModal.show();  // Afficher la modale
 
-                // Redirection après la fermeture du modal
-                document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
-                    window.location.href = 'dashboard.php'; // Redirige vers dashboard.php
-                });
-            } else {
-                alert('Erreur : ' + jsonData.message); // Affiche un message d'erreur
-            }
-        } catch (e) {
-            alert('Erreur lors de la soumission de la signature.'); // Pop-up d'erreur
-        }
-    })
-    .catch((error) => {
-        alert('Erreur de connexion. Veuillez réessayer.'); // Pop-up d'erreur
+    // Lorsqu'on ferme la modale, rediriger ou soumettre le formulaire
+    document.getElementById('closeModal').addEventListener('click', function() {
+        // Après la fermeture de la modale, soumettre le formulaire
+        document.getElementById("signatureForm").submit();
     });
 });
+
+
+
+
 

@@ -1,28 +1,18 @@
 <?php
-include('partials/header.php');
+include_once('partials/header.php');
 include_once('include/Config.php');
 include_once('include/pdo.php');
+include_once('classes/Course.php');
 
-// Récupérer le classID de l'élève depuis la session
 $classID = $_SESSION['class_id'];
-$currentDate = date('Y-m-d'); // Obtenir la date actuelle pour filtrer les cours de la journée
-$currentDateTime = date('Y-m-d H:i:s'); // Obtenir la date et l'heure actuelles pour comparer aux cours
+$currentDate = date('Y-m-d');
+$currentDateTime = date('Y-m-d H:i:s');
 
-// Requête pour récupérer les cours de la journée pour l'élève connecté, triés par heure de début
-$query = "SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime
-          FROM Subject s
-          JOIN course sc ON s.idSubject = sc.SubjectID
-          WHERE sc.classID = :classID 
-          AND DATE(sc.StartDateTime) = :currentDate
-          AND sc.EndDateTime > :currentDateTime  -- Exclure les cours dont l'heure de fin est dépassée
-          ORDER BY sc.StartDateTime ASC";  // Tri par StartDateTime en ordre croissant
+// Instanciation de la classe Course
+$courseManager = new Course($pdo);
 
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(':classID', $classID, PDO::PARAM_INT);
-$stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
-$stmt->bindParam(':currentDateTime', $currentDateTime, PDO::PARAM_STR);
-$stmt->execute();
-$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Récupération des cours de la journée
+$courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +38,7 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Ligne des blocs de cours en colonne -->
     <div class="row g-4">
-    <?php
+<?php
 foreach ($courses as $course) {
     $startTime = strtotime($course['StartDateTime']);
     $endTime = strtotime($course['EndDateTime']);
@@ -70,13 +60,17 @@ foreach ($courses as $course) {
                 <h2 class="card-title"><?php echo htmlspecialchars($course['SubName']); ?></h2>
                 <h4 class="card-text">Heure début : <?php echo date('H:i', $startTime); ?></h4>
                 <h4 class="card-text">Heure fin : <?php echo date('H:i', $endTime); ?></h4>
+                <h4 class="card-text">ID : <?php echo htmlspecialchars($course['idCourse']); ?></h4>
 
                 <?php if (($presence['Presence'] === 'Present') && ($isWithinTimeFrame)) : ?>
                     <!-- Élève déjà présent -->
                     <p class="text-success">Vous êtes marqué comme présent.</p>
                 <?php elseif ($isWithinTimeFrame): ?>
                     <!-- Affichez le bouton de signature uniquement si dans l'horaire -->
-                    <a href="Signature.php?idCourse=<?php echo $course['idCourse']; ?>" class="btn btn-primary mt-3 w-100">Signer</a>
+                    <form method="POST" action="drawSignature.php">
+                        <input type="hidden" name="idCourse" value="<?php echo $course['idCourse']; ?>">
+                        <button type="submit" class="btn btn-primary mt-3 w-100">Signer</button>
+                    </form>
                 <?php else: ?>
                     <!-- Hors de l'horaire -->
                     <p class="text-warning"></p>
@@ -84,11 +78,10 @@ foreach ($courses as $course) {
             </div>
         </div>
     </div>
-    <?php
+<?php
 }
 ?>
-
-    </div>
+</div>
 </div>
 
 

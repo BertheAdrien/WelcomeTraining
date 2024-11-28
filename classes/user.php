@@ -106,5 +106,12 @@ class User {
         $stmt->bindParam(':userId', $userId);        
         $stmt->execute();
     }
+
+    public function deleteUser($userId) {
+        $query = "DELETE FROM User WHERE idUser = :userId";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+    }
         
 }

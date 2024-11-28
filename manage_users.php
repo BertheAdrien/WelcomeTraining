@@ -27,11 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
     );
 }
 
-
-if (isset($_POST['delete_class'])) {
-    $userController->handleDeleteClass($_POST['user_id'], $_POST['class_id']);
+if (isset($_POST['delete_user'])) {
+    $userController->handleDeleteUser($_POST['user_id']);
 }
-
 
 // Récupérer les utilisateurs et les classes
 $users = $userController->handleSearch($search);
@@ -64,6 +62,7 @@ $classes = $userController->getClasses();
                     <th>Statut</th>
                     <th>Classe</th>
                     <th>Action</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,11 +86,19 @@ $classes = $userController->getClasses();
                                 </select>
                             </td>
                             <td>
-                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">Affecter une classe</a>
+                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">
+                                    Affecter une classe
+                                </a>
                             </td>
                             <td>
                                 <input type="hidden" name="user_id" value="<?php echo $user['idUser']; ?>">
                                 <button type="submit" name="update_user" class="btn btn-success">Mettre à jour</button>
+                            </td>
+                            <td>
+                                <!-- Nouveau bouton Supprimer -->
+                                <button type="submit" name="delete_user" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                    ✖
+                                </button>
                             </td>
                         </form>
                     </tr>
@@ -100,7 +107,6 @@ $classes = $userController->getClasses();
 
         </table>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

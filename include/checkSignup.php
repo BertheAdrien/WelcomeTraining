@@ -1,6 +1,7 @@
 <?php
 include_once 'Config.php'; // Vérifiez que $pdo est correctement configuré ici
 include_once 'classes/user.php';
+include_once('include/pdo.php');
 
 
 // Vérification si le formulaire est soumis
