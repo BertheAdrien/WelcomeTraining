@@ -88,7 +88,7 @@ $students = $stmtStudents->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Présent</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
-                                    <th>Statuts</th>
+                                    <th>Statut</th>
                                     <th>Signature</th>
                                 </tr>
                             </thead>
