@@ -5,9 +5,9 @@ include_once('include/pdo.php');
 
 // Récupérer l'idUser de l'élève depuis la session
 $idUser = $_SESSION['idUser'];
-$currentDate = date('Y-m-d'); // Obtenir la date actuelle
+$currentDate = date('Y-m-d');
 
-// Requête pour récupérer les cours de la journée pour l'utilisateur connecté, triés par heure de début
+// Requête pour récupérer les cours de la journée
 $query = "
     SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime, c.ClassName
     FROM Subject s
@@ -16,7 +16,7 @@ $query = "
     WHERE sc.teacherID = :idUser
     AND DATE(sc.StartDateTime) = :currentDate
     AND sc.EndDateTime > CURRENT_TIMESTAMP
-    ORDER BY sc.StartDateTime ASC"; // Tri par StartDateTime en ordre croissant
+    ORDER BY sc.StartDateTime ASC";
 
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
@@ -45,12 +45,12 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- Ligne des blocs de cours en colonne -->
     <div class="row g-4">
-    <?php foreach ($courses as $course): ?>
-        <?php 
+    <?php foreach ($courses as $course): 
         $startTime = strtotime($course['StartDateTime']);
         $endTime = strtotime($course['EndDateTime']);
+        $now = time();
+        $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
         ?>
         <div class="col-12 d-flex justify-content-center">
             <div class="card shadow-sm cours-bloc" style="max-width: 400px; width: 100%;">
@@ -59,7 +59,18 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h4 class="card-text">Heure début : <?php echo date('H:i', $startTime); ?></h4>
                     <h4 class="card-text">Heure fin : <?php echo date('H:i', $endTime); ?></h4>
                     <h5 class="card-text">Classe : <?php echo htmlspecialchars($course['ClassName']); ?></h5>
-                    <!-- Pas de bouton signer -->
+                    
+                    <?php if ($isCurrentCourse): ?>
+                        <!-- Bouton pour gérer les présences -->
+                        <a href="gestionPresence.php?courseId=<?php echo $course['idCourse']; ?>" 
+                           class="btn btn-primary w-100 mt-3">
+                            Gérer les présences
+                        </a>
+                    <?php else: ?>
+                        <button class="btn btn-secondary w-100 mt-3" disabled>
+                            Hors des horaires du cours
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -67,7 +78,6 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<!-- Bootstrap JS (optionnel) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
