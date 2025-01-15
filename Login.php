@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="mb-3">
-                                <label for="Email" class="form-label">Nom de compte</label>
+                                <label for="Email" class="form-label">Adresse Mail</label>
                                 <input type="text" class="form-control" id="Email" name="Email" required>
                             </div>
                             <div class="mb-3">

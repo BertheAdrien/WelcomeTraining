@@ -44,12 +44,17 @@ foreach ($courses as $course) {
     $endTime = strtotime($course['EndDateTime']);
     $now = strtotime($currentDateTime);
 
-    // Vérifiez si l'élève est déjà marqué comme présent pour ce cours
-    $queryPresence = "SELECT Presence FROM user WHERE idUser = :idUser";
-    $stmtPresence = $pdo->prepare($queryPresence);
-    $stmtPresence->bindParam(':idUser', $_SESSION['idUser'], PDO::PARAM_INT);
-    $stmtPresence->execute();
-    $presence = $stmtPresence->fetch(PDO::FETCH_ASSOC);
+    // Vérifier si l'élève peut signer et s'il a déjà signé
+    $querySignature = "SELECT ca.can_sign, ca.signature_path 
+                      FROM course_attendance ca 
+                      WHERE ca.course_id = :courseId 
+                      AND ca.student_id = :studentId";
+    $stmtSignature = $pdo->prepare($querySignature);
+    $stmtSignature->execute([
+        ':courseId' => $course['idCourse'],
+        ':studentId' => $_SESSION['idUser']
+    ]);
+    $signatureStatus = $stmtSignature->fetch(PDO::FETCH_ASSOC);
 
     // Vérifiez si l'heure actuelle est dans l'intervalle du cours
     $isWithinTimeFrame = $now >= $startTime && $now <= $endTime;
@@ -60,20 +65,28 @@ foreach ($courses as $course) {
                 <h2 class="card-title"><?php echo htmlspecialchars($course['SubName']); ?></h2>
                 <h4 class="card-text">Heure début : <?php echo date('H:i', $startTime); ?></h4>
                 <h4 class="card-text">Heure fin : <?php echo date('H:i', $endTime); ?></h4>
-                <h4 class="card-text">ID : <?php echo htmlspecialchars($course['idCourse']); ?></h4>
 
-                <?php if (($presence['Presence'] === 'Present') && ($isWithinTimeFrame)) : ?>
-                    <!-- Élève déjà présent -->
-                    <p class="text-success">Vous êtes marqué comme présent.</p>
-                <?php elseif ($isWithinTimeFrame): ?>
-                    <!-- Affichez le bouton de signature uniquement si dans l'horaire -->
+                <?php if (!empty($signatureStatus['signature_path'])): ?>
+                    <!-- L'élève a déjà signé -->
+                    <div class="alert alert-success mt-3" role="alert">
+                        <p class="mb-0">Vous avez déjà signé pour ce cours</p>
+                    </div>
+                <?php elseif ($signatureStatus['can_sign'] == 1 && $isWithinTimeFrame): ?>
+                    <!-- L'élève peut signer -->
                     <form method="POST" action="drawSignature.php">
                         <input type="hidden" name="idCourse" value="<?php echo $course['idCourse']; ?>">
                         <button type="submit" class="btn btn-primary mt-3 w-100">Signer</button>
                     </form>
+                <?php elseif ($isWithinTimeFrame): ?>
+                    <!-- Dans l'horaire mais ne peut pas encore signer -->
+                    <div class="alert alert-warning mt-3" role="alert">
+                        <p class="mb-0">En attente de validation par le professeur</p>
+                    </div>
                 <?php else: ?>
-                    <!-- Hors de l'horaire -->
-                    <p class="text-warning"></p>
+                    <!-- Hors horaire -->
+                    <div class="alert alert-secondary mt-3" role="alert">
+                        <p class="mb-0">Hors des horaires du cours</p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -81,12 +94,10 @@ foreach ($courses as $course) {
 <?php
 }
 ?>
+    </div>
 </div>
-</div>
 
-
-
-<!-- Bootstrap JS (optionnel) -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

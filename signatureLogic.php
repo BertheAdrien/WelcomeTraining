@@ -1,58 +1,66 @@
 <?php
+// saveSignature.php
 
-// Inclure les fichiers nécessaires
-include_once('include/Config.php');
-include_once('include/pdo.php');
-include_once('classes/Signature.php');
 session_start();
+require_once 'include/Config.php';
+require_once 'include/pdo.php';
 
-// Vérifiez si les données ont été envoyées via POST
-if (isset($_POST['idCourse']) && isset($_POST['signatureData'])) {
-    // Récupérer l'id du cours et les données de la signature
-    $idCourse = $_POST['idCourse'];
-    $signatureData = $_POST['signatureData'];
-
-    // Vérifier que les données de signature sont valides
-    if (empty($signatureData)) {
-        echo json_encode(['status' => 'error', 'message' => 'Aucune signature reçue.']);
-        exit;
-    }
-
-    // Décoder les données de l'image base64
-    $imageData = base64_decode(preg_replace('#^data:image/png;base64,#i', '', $signatureData));
-
-    // Vérifier que l'image a bien été décodée
-    if ($imageData === false) {
-        echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la décodification de l\'image.']);
-        exit;
-    }
-
-    // Définir le chemin du fichier où l'image sera sauvegardée
-    $timestamp = time();
-    $fileName = "signatures/signature_" . $timestamp . "_signature.png";    // Sauvegarder l'image sur le serveur
-    
-    // file_put_contents($fileName, $imageData);
-
-    // Créer une instance de la classe Signature
-    
-        $signatureManager = new Signature($pdo);
-
-        // Sauvegarder la signature dans la base de données
-        $filePath = $signatureManager->saveSignature($idCourse, $fileName);
-
-        // Répondre avec un message de succès
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Signature sauvegardée avec succès.',
-            'filePath' => $filePath
-        ]);
-        
-        // // Rediriger vers la page dashboard après un délai
-        // //  header("Location: dashboard.php");
-        //  exit();
-} else {
-    // Si l'idCourse ou la signature sont manquants, afficher une erreur
-    echo json_encode(['status' => 'error', 'message' => 'Les données de signature ou l\'ID du cours sont manquants.']);
+// Vérifier si l'utilisateur est connecté et est un élève
+if (!isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Student') {
+    http_response_code(403);
+    echo json_encode(['error' => 'Accès non autorisé']);
     exit;
 }
-?>
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $studentId = $_SESSION['idUser'];
+    $courseId = $_POST['idCourse'];
+    $signatureData = $_POST['signatureData'];
+
+    try {
+        // Vérifier si l'élève a le droit de signer
+        $stmt = $pdo->prepare("
+            SELECT can_sign 
+            FROM course_attendance 
+            WHERE student_id = ? AND course_id = ? AND can_sign = 1
+        ");
+        $stmt->execute([$studentId, $courseId]);
+        
+        if ($stmt->rowCount() === 0) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Signature non autorisée']);
+            exit;
+        }
+
+        // Decoder l'image base64
+        $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureData));
+        
+        // Générer un nom de fichier unique
+        $filename = 'signature_' . $studentId . '_' . $courseId . '_' . time() . '.png';
+        $filepath = 'signatures/' . $filename;
+        
+        // Sauvegarder l'image
+        file_put_contents($filepath, $imageData);
+
+        // Mettre à jour la base de données
+        $stmt = $pdo->prepare("
+            UPDATE course_attendance 
+            SET signature_path = ?, 
+                can_sign = 0, 
+                signed_at = NOW() 
+            WHERE student_id = ? AND course_id = ?
+        ");
+        $stmt->execute([$filepath, $studentId, $courseId]);
+
+        // Redirection vers le tableau de bord
+        header('Location: dashboard.php');
+        exit;
+
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Erreur lors de l\'enregistrement de la signature']);
+    }
+} else {
+    http_response_code(405);
+    echo json_encode(['error' => 'Méthode non autorisée']);
+}
