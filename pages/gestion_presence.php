@@ -2,6 +2,7 @@
 include_once('../partials/header.php');
 include_once('../include/Config.php');
 include_once('../include/pdo.php');
+include_once('../classes/Course.php');
 
 // Vérifier si l'utilisateur est un professeur
 if (!isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
@@ -10,6 +11,10 @@ if (!isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
 }
 
 $courseId = isset($_GET['courseId']) ? (int)$_GET['courseId'] : 0;
+
+$courseManager = new Course($pdo);
+$course = $courseManager->getCourseById($courseId);
+$students = $courseManager->getStudentsByCourse($courseId);
 
 
 // Récupérer les informations du cours
@@ -31,22 +36,23 @@ if (!$course) {
     die("Cours non trouvé ou non autorisé");
 }
 
-// Récupérer tous les élèves de la classe avec leur statut de présence
-$queryStudents = "
-    SELECT u.idUser, u.FirstName, u.LastName, 
-           ca.can_sign, ca.signature_path
-    FROM user u
-    JOIN user_has_class uhc ON u.idUser = uhc.user_idUser
-    JOIN class c ON uhc.class_idClasse = c.idClasse
-    JOIN course sc ON c.idClasse = sc.classID
-    LEFT JOIN course_attendance ca ON u.idUser = ca.student_id AND ca.course_id = :courseId
-    WHERE sc.idCourse = :courseId 
-    AND u.status = 'Student'
-    ORDER BY u.LastName, u.FirstName;";
 
-$stmtStudents = $pdo->prepare($queryStudents);
-$stmtStudents->execute([':courseId' => $courseId]);
-$students = $stmtStudents->fetchAll(PDO::FETCH_ASSOC);
+// // Récupérer tous les élèves de la classe avec leur statut de présence
+// $queryStudents = "
+//     SELECT u.idUser, u.FirstName, u.LastName, 
+//            ca.can_sign, ca.signature_path
+//     FROM user u
+//     JOIN user_has_class uhc ON u.idUser = uhc.user_idUser
+//     JOIN class c ON uhc.class_idClasse = c.idClasse
+//     JOIN course sc ON c.idClasse = sc.classID
+//     LEFT JOIN course_attendance ca ON u.idUser = ca.student_id AND ca.course_id = :courseId
+//     WHERE sc.idCourse = :courseId 
+//     AND u.status = 'Student'
+//     ORDER BY u.LastName, u.FirstName;";
+
+// $stmtStudents = $pdo->prepare($queryStudents);
+// $stmtStudents->execute([':courseId' => $courseId]);
+// $students = $stmtStudents->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

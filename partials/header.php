@@ -60,7 +60,7 @@ if ($_SESSION['user_status'] === 'Student') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'Dashboard.php' ? 'active font-weight-bold' : ''; ?>" href="Dashboard.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'dashboard_student.php' ? 'active font-weight-bold' : ''; ?>" href="dashboard_student.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $current_page === 'view_shedule_student.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_student.php">Calendrier</a>
