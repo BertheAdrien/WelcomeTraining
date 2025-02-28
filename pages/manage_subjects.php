@@ -1,14 +1,65 @@
-<?php 
+<?php
 $title = 'Gestion des matières';
-include_once('../partials/header.php');
+include_once '../partials/header.php';
 include_once '../include/Config.php';
-include_once('../include/pdo.php');
+include_once '../include/pdo.php';
+include_once '../classes/SubjectManager.php'; // On inclut la classe qui gère les matières
+
+// Initialiser le gestionnaire de matières
+$subjectManager = new SubjectManager($pdo);
 
 // Récupérer toutes les matières depuis la base de données
 $query = "SELECT * FROM Subject";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Gestion des messages de succès ou d'erreur
+function displayMessage() {
+    if (isset($_SESSION['message'])) {
+        echo '<div class="alert alert-' . $_SESSION['message_type'] . '">';
+        echo $_SESSION['message'];
+        echo '</div>';
+        unset($_SESSION['message']);
+        unset($_SESSION['message_type']);
+    }
+}
+
+// Gestion des actions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ajouter une matière
+    if (isset($_POST['add_subject'])) {
+        $message = $subjectManager->addSubject($_POST['subject_name']);
+        $_SESSION['message'] = $message;
+        $_SESSION['message_type'] = 'success';
+        header('Location: manage_subjects.php');
+        exit();
+    }
+
+    // Supprimer une matière
+    if (isset($_POST['delete_subject'])) {
+        $message = $subjectManager->deleteSubject($_POST['subject_id']);
+        $_SESSION['message'] = $message;
+        $_SESSION['message_type'] = 'danger';
+        header('Location: manage_subjects.php');
+        exit();
+    }
+
+    // Affecter un cours
+    if (isset($_POST['assign_course'])) {
+        $message = $subjectManager->assignCourse(
+            $_POST['subject_id'],
+            $_POST['class_id'],
+            $_POST['teacher_id'],
+            $_POST['start_datetime'],
+            $_POST['end_datetime']
+        );
+        $_SESSION['message'] = $message;
+        $_SESSION['message_type'] = 'success';
+        header('Location: manage_subjects.php');
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +69,7 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1 class="text-center mb-4">Gestion des matières</h1>
         <!-- Formulaire pour ajouter une nouvelle matière -->
         <h2 class="mt-4">Ajouter une nouvelle matière</h2>
-        <form method="POST" action="subject_actions.php" class="d-flex mb-4">
+        <form method="POST" action="manage_subjects.php" class="d-flex mb-4">
             <input type="text" name="subject_name" class="form-control me-2" placeholder="Nom de la nouvelle matière" required>
             <button type="submit" name="add_subject" class="btn btn-primary">Ajouter</button>
         </form>
@@ -27,6 +78,9 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="text-center mb-4">
             <a href="edit_courses.php" class="btn btn-warning">Modifier les cours</a>
         </div>
+
+        <!-- Affichage des messages de succès ou d'erreur -->
+        <?php displayMessage(); ?>
 
         <!-- Liste des matières -->
         <h2>Matières existantes</h2>
@@ -43,19 +97,19 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <tr>
             <!-- Nom de la matière cliquable pour affecter un cours -->
             <td>
-                <a href="#" class="subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>">
+                <a data-subject-id="<?php echo $subject['idSubject']; ?>">
                     <?php echo htmlspecialchars($subject['SubName']); ?>
                 </a>
             </td>
             <!-- Bouton pour affecter un cours -->
             <td>
-                <button type="button" class="btn btn-secondary subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>">
+                <button type="button" class="btn btn-secondary subject-link" data-subject-id="<?php echo $subject['idSubject']; ?>" data-bs-toggle="modal" data-bs-target="#assignmentModal">
                     Affecter un cours
                 </button>
             </td>
             <!-- Formulaire pour supprimer une matière -->
             <td>
-                <form method="POST" action="subject_actions.php" style="display:inline-block;">
+                <form method="POST" action="manage_subjects.php" style="display:inline-block;">
                     <input type="hidden" name="subject_id" value="<?php echo $subject['idSubject']; ?>">
                     <button type="submit" name="delete_subject" class="btn btn-danger">✖</button>
                 </form>
@@ -63,13 +117,12 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
     <?php endforeach; ?>
 </tbody>
-
         </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="assets/JS/manageSubjects.js"></script> <!-- Fichier JS externe -->
+    <script src="../assets/JS/manageSubjects.js"></script> <!-- Fichier JS externe -->
 
     <!-- Modal pour affecter un professeur, une classe et un horaire -->
     <div class="modal fade" id="assignmentModal" tabindex="-1" aria-labelledby="assignmentModalLabel" aria-hidden="true">
@@ -80,7 +133,7 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="subject_actions.php">
+                    <form method="POST" action="manage_subjects.php">
                         <input type="hidden" name="subject_id" id="modalSubjectId">
                         
                         <!-- Sélection du professeur -->
@@ -127,21 +180,5 @@ $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Succès</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Cours affecté avec succès !
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>

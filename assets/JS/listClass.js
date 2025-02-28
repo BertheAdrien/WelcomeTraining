@@ -8,7 +8,7 @@ $(document).ready(function() {
 
         // Appel AJAX pour récupérer la liste des élèves
         $.ajax({
-            url: 'get_students.php', // Le fichier PHP qui va traiter la requête
+            url: '../actions/get_students.php', // Le fichier PHP qui va traiter la requête
             type: 'POST',            // La méthode de la requête
             data: { class_id: classId }, // Données envoyées via POST
             success: function(response) {
@@ -23,5 +23,3 @@ $(document).ready(function() {
         });
     });
 });
-
-

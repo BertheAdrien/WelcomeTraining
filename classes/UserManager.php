@@ -100,4 +100,15 @@ class UserManager {
         $stmt->bindParam(':classId', $classId);
         return $stmt->execute();
     }
+
+    public function getStudentsByClass($classId) {
+        $stmt = $this->pdo->prepare("SELECT u.FirstName, u.LastName, u.Email 
+                                     FROM User u
+                                     JOIN User_has_Class uc ON u.idUser = uc.User_idUser
+                                     WHERE uc.Class_idClasse = :classId AND u.Status = 'Student'");
+        $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

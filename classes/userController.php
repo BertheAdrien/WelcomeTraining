@@ -36,4 +36,8 @@ class UserController {
     public function deleteUserClass($userId, $classId) {
         return $this->userManager->deleteUserClass($userId, $classId);
     }
+    // Récupérer les étudiants d'une classe
+    public function getStudentsByClass($classId) {
+        return $this->userManager->getStudentsByClass($classId);
+    }
 }

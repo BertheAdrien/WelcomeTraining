@@ -1,22 +1,21 @@
 <?php
-include_once 'include/Config.php'; 
-include_once('include/pdo.php');
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
+include_once('../classes/UserManager.php');
+include_once('../classes/UserController.php');
 
+// Vérifier si l'ID de la classe a été passer
 if (isset($_POST['class_id'])) {
     $classId = $_POST['class_id'];
 
-    // Requête pour obtenir les élèves associés à la classe
-    $stmt = $pdo->prepare("
-        SELECT User.FirstName, User.LastName, User.Email 
-        FROM User_has_Class 
-        INNER JOIN User ON User.idUser = User_has_Class.User_idUser
-        WHERE User_has_Class.Class_idClasse = :classId
-    ");
-    $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
-    $stmt->execute();
-    $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Initialiser les classes UserManager et UserController
+    $userManager = new UserManager($pdo);
+    $userController = new UserController($userManager);
 
-    // Vérifier si des élèves sont associés à la classe
+    // Récupérer les étudiants associés à la classe via le contrôleur
+    $students = $userController->getStudentsByClass($classId);
+
+    // Vérifier si des étudiants ont été récupérés
     if ($students) {
         foreach ($students as $student) {
             echo '<li class="list-group-item">'
