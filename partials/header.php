@@ -124,7 +124,7 @@ if ($_SESSION['user_status'] === 'Admin') {
                     <a class="nav-link <?php echo $current_page === 'manage_users.php' ? 'active font-weight-bold' : ''; ?>" href="manage_users.php">Gérer les utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="manage_classes.php">Gérer les classes</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="pages/manage_classes.php">Gérer les classes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $current_page === 'manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="manage_subjects.php">Gérer les cours</a>

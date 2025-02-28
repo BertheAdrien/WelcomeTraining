@@ -21,8 +21,8 @@ class UserController {
         $this->user->deleteClass($userId, $classId);
     }
 
-    public function getClasses() {
-        return $this->classManager->getClasses();
+    public function getAllClasses() {
+        return $this->classManager->getAllClasses();
     }
     
     public function handleDeleteUser($userId) {

@@ -7,8 +7,6 @@ class User {
         $this->pdo = $pdo;
     }
 
-
-
     public function loginUser($email, $password){
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM User WHERE Email = :email");

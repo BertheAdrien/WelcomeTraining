@@ -33,7 +33,7 @@ if (isset($_POST['delete_user'])) {
 
 // Récupérer les utilisateurs et les classes
 $users = $userController->handleSearch($search);
-$classes = $userController->getClasses();
+$classes = $userController->getAllClasses();
 
 ?>
 
