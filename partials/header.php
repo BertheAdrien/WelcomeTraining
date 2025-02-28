@@ -91,10 +91,10 @@ if ($_SESSION['user_status'] === 'Prof') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'dashboardProf.php' ? 'active font-weight-bold' : ''; ?>" href="dashboardProf.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'dashboard_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="dashboard_teacher.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'viewSheduleProf.php' ? 'active font-weight-bold' : ''; ?>" href="viewSheduleProf.php">Calendrier</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_teacher.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="Logout.php">Déconnexion</a>

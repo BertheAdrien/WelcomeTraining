@@ -1,7 +1,7 @@
 <?php
-include_once('partials/header.php');
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../partials/header.php');
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
 
 // Vérifier si l'utilisateur est un professeur
 if (!isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
@@ -127,7 +127,7 @@ $students = $stmtStudents->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="btn btn-primary">Enregistrer les présences</button>
-                        <a href="dashboardProf.php" class="btn btn-secondary">Retour</a>
+                        <a href="dashboard_teacher.php" class="btn btn-secondary">Retour</a>
                     </div>
                 </form>
             </div>

@@ -67,7 +67,7 @@ class UserManager {
         ");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function addUserClass($userId, $classId) {
@@ -111,4 +111,18 @@ class UserManager {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function loginUser($email, $password) {
+        $query = "SELECT idUser, FirstName, LastName, Password, Status FROM user WHERE Email = :email";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['Password'])) {
+            return $user; // Retourne l'utilisateur si le mot de passe est bon
+        }
+        return false; // Mauvais identifiants
+    }
 }
+

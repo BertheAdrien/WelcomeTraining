@@ -1,32 +1,16 @@
 <?php
-include_once('partials/header.php');
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../partials/header.php');
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
+include_once('../classes/TeacherManager.php'); // Ajout de la classe
 
-// Récupérer l'idUser de l'élève depuis la session
 $idUser = $_SESSION['idUser'];
-$currentDate = date('Y-m-d');
-
-// Requête pour récupérer les cours de la journée
-$query = "
-    SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime, c.ClassName
-    FROM Subject s
-    JOIN course sc ON s.idSubject = sc.SubjectID
-    JOIN Class c ON sc.classID = c.idClasse
-    WHERE sc.teacherID = :idUser
-    AND DATE(sc.StartDateTime) = :currentDate
-    AND sc.EndDateTime > CURRENT_TIMESTAMP
-    ORDER BY sc.StartDateTime ASC";
-
-$stmt = $pdo->prepare($query);
-$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
-$stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
-$stmt->execute();
-$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$teacherManager = new TeacherManager($pdo);
+$courses = $teacherManager->getTodayTeacherCourses($idUser);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <body class="bg-light">
 
 <div class="container py-4">
@@ -46,11 +30,11 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="row g-4">
-    <?php foreach ($courses as $course): 
-        $startTime = strtotime($course['StartDateTime']);
-        $endTime = strtotime($course['EndDateTime']);
-        $now = time();
-        $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
+        <?php foreach ($courses as $course): 
+            $startTime = strtotime($course['StartDateTime']);
+            $endTime = strtotime($course['EndDateTime']);
+            $now = time();
+            $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
         ?>
         <div class="col-12 d-flex justify-content-center">
             <div class="card shadow-sm cours-bloc" style="max-width: 400px; width: 100%;">
@@ -59,10 +43,9 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h4 class="card-text">Heure début : <?php echo date('H:i', $startTime); ?></h4>
                     <h4 class="card-text">Heure fin : <?php echo date('H:i', $endTime); ?></h4>
                     <h5 class="card-text">Classe : <?php echo htmlspecialchars($course['ClassName']); ?></h5>
-                    
+
                     <?php if ($isCurrentCourse): ?>
-                        <!-- Bouton pour gérer les présences -->
-                        <a href="gestionPresence.php?courseId=<?php echo $course['idCourse']; ?>" 
+                        <a href="gestion_presence.php?courseId=<?php echo $course['idCourse']; ?>" 
                            class="btn btn-primary w-100 mt-3">
                             Gérer les présences
                         </a>
@@ -74,7 +57,7 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
         </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
     </div>
 </div>
 

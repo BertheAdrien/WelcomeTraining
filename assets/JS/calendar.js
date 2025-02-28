@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Sinon, charger les événements pour la classe sélectionnée
-        const url = `getCoursesJSON.php?classID=${selectedClass}`;
+        const url = `../actions/getCoursesJSON.php?classID=${selectedClass}`;
         
         fetch(url)
             .then(response => response.json())

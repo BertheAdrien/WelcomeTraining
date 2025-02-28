@@ -1,6 +1,6 @@
 <?php
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
@@ -52,9 +52,9 @@ try {
     }
 
     $pdo->commit();
-    header('Location: gestionPresence.php?courseId=' . $courseId . '&success=1');
+    header('Location: gestion_presence.php?courseId=' . $courseId . '&success=1');
 } catch (Exception $e) {
     $pdo->rollBack();
-    header('Location: gestionPresence.php?courseId=' . $courseId . '&error=1');
+    header('Location: gestion_presence.php?courseId=' . $courseId . '&error=1');
 }
 ?>

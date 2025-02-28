@@ -1,8 +1,8 @@
 <?php
-include_once('partials/header.php');
-include_once('include/Config.php');
-include_once('include/pdo.php');
-include_once('classes/Course.php');
+include_once('../partials/header.php');
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
+include_once('../classes/Course.php');
 
 $classID = $_SESSION['class_id'];
 $currentDate = date('Y-m-d');

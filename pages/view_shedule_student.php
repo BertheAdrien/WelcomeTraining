@@ -1,9 +1,9 @@
 <?php
 session_start(); 
 $title = 'Agenda';
-include_once('partials/header.php');     
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../partials/header.php');     
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
 
 $isStudent = $_SESSION['user_status'] === 'Student';
 $classID = $_SESSION['class_id'];  // Récupérer le classID de l'élève depuis la session
@@ -51,6 +51,6 @@ foreach ($courses as $course) {
     </script>
     
     <!-- Script personnalisé pour initialiser le calendrier -->
-    <script src="assets/js/calendar.js"></script>
+    <script src="../assets/js/calendar.js"></script>
 </body>
 </html>
