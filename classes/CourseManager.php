@@ -14,14 +14,14 @@ class CourseManager {
                          c.ClassName, 
                          sc.StartDateTime, 
                          sc.EndDateTime 
-                  FROM Subject s
+                  FROM subject s
                   JOIN course sc ON s.idSubject = sc.SubjectID
-                  JOIN user u ON sc.teacherID = u.idUser
-                  JOIN Class c ON sc.classID = c.idClasse
+                  JOIN user u ON sc.TeacherID = u.idUser
+                  JOIN class c ON sc.ClassID = c.idClasse
                   WHERE (s.SubName LIKE :search 
                          OR CONCAT(u.FirstName, ' ', u.LastName) LIKE :search 
                          OR c.ClassName LIKE :search)
-                    AND sc.StartDateTime > NOW()  
+                     AND sc.EndDateTime > NOW()
                   ORDER BY sc.StartDateTime ASC";
 
         $stmt = $this->pdo->prepare($query);

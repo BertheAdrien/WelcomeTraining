@@ -2,7 +2,7 @@
 include_once('../include/Config.php');
 include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
-include_once('../classes/UserController.php');
+include_once('../controllers/UserController.php');
 
 // Vérifier si l'ID de la classe a été passer
 if (isset($_POST['class_id'])) {

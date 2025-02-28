@@ -3,7 +3,7 @@ $title = 'Gestion des classes de l\'utilisateur';
 include_once('../partials/header.php');
 include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
-include_once('../classes/UserController.php');
+include_once('../controllers/UserController.php');
 
 $userManager = new UserManager($pdo);
 $userController = new UserController($userManager);

@@ -21,9 +21,8 @@ $isAdmin = $_SESSION['user_status'] === 'Admin';
         <?php if ($isAdmin): ?>
             <!-- Afficher la barre de sélection de classe uniquement pour l'admin -->
             <div class="mb-4">
-                <label for="classSelect" class="form-label">Sélectionner une classe :</label>
                 <select id="classSelect" class="form-select">
-                    <option value="">Tous les cours</option>
+                    <option value="">Sélectionner une classe</option>
                     <?php
                     // Récupérer la liste des classes
                     $classQuery = "SELECT idClasse, ClassName FROM Class";

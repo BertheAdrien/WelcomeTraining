@@ -3,7 +3,7 @@ $title = 'Gestion des cours';
 include_once('../partials/header.php');     
 include_once('../include/pdo.php');
 include_once('../classes/CourseManager.php');
-include_once('../classes/CourseController.php');
+include_once('../controllers/CourseController.php');
 
 $courseManager = new CourseManager($pdo);
 $courseController = new CourseController($courseManager);
@@ -18,6 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_course'])) {
     header('Location: edit_courses.php');
     exit();
 }
+$courses = $courseController->searchCourses($search);
+
+if (empty($courses)) {
+    echo "<p>Aucun cours trouvé.</p>";
+}
+
 ?>
 
 <!DOCTYPE html>
