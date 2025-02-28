@@ -1,44 +1,15 @@
 <?php
-// Inclure les classes nécessaires
-include_once('include/config.php');
-include_once('classes/user.php');
-include_once('classes/classManager.php');
-include_once('classes/userController.php');
-include_once('partials/header.php');
-include_once('include/pdo.php');
+include_once('../include/pdo.php');
+include_once('../classes/UserManager.php');
+include_once('../classes/UserController.php');
+include_once('../partials/header.php');
 
-// Créer les objets User et ClassManager
-$user = new User($pdo);
-$classManager = new ClassManager($pdo);
-$userController = new UserController($user, $classManager);
+$userManager = new UserManager($pdo);
+$userController = new UserController($userManager);
 
-// Récupérer les utilisateurs et les classes après modification
-
-// Gérer les actions
 $search = isset($_POST['search']) ? $_POST['search'] : '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_user'])) {
-    $userController->handleUpdateStatus(
-        $_POST['user_id'],
-        $_POST['last_name'],
-        $_POST['first_name'],
-        $_POST['email'],
-        $_POST['status']
-    );
-}
-
-if (isset($_POST['delete_user'])) {
-    $userController->handleDeleteUser($_POST['user_id']);
-}
-
-// Récupérer les utilisateurs et les classes
-$users = $userController->handleSearch($search);
-$classes = $userController->getAllClasses();
-
+$users = $userController->searchUsers($search);
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
 
 <body class="bg-light">
     <div class="container py-4">
@@ -68,7 +39,7 @@ $classes = $userController->getAllClasses();
             <tbody>
                 <?php foreach ($users as $user) : ?>
                     <tr>
-                        <form method="POST">
+                        <form method="POST" action="../actions/user_actions_handler.php">
                             <td>
                                 <input type="text" name="last_name" class="form-control" value="<?php echo htmlspecialchars($user['LastName']); ?>">
                             </td>
@@ -95,7 +66,6 @@ $classes = $userController->getAllClasses();
                                 <button type="submit" name="update_user" class="btn btn-success">Mettre à jour</button>
                             </td>
                             <td>
-                                <!-- Nouveau bouton Supprimer -->
                                 <button type="submit" name="delete_user" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
                                     ✖
                                 </button>
@@ -104,7 +74,6 @@ $classes = $userController->getAllClasses();
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-
         </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

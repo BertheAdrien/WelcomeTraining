@@ -2,9 +2,9 @@
 session_start(); 
 
 $title = 'Agenda';
-include_once('partials/header.php');     
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../partials/header.php');     
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
 
 $isAdmin = $_SESSION['user_status'] === 'Admin';
     $course = "SELECT * FROM Course";
@@ -52,6 +52,6 @@ $isAdmin = $_SESSION['user_status'] === 'Admin';
     </script>
     
     <!-- Script personnalisé pour initialiser le calendrier -->
-    <script src="assets/js/calendarAdmin.js"></script>
+    <script src="../assets/js/calendarAdmin.js"></script>
 </body>
 </html>

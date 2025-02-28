@@ -1,8 +1,8 @@
 <?php 
 $title = 'Gestion des matières';
-include_once('partials/header.php');
-include_once 'include/Config.php';
-include_once('include/pdo.php');
+include_once('../partials/header.php');
+include_once '../include/Config.php';
+include_once('../include/pdo.php');
 
 // Récupérer toutes les matières depuis la base de données
 $query = "SELECT * FROM Subject";

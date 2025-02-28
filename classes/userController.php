@@ -1,32 +1,39 @@
 <?php
-
 class UserController {
-    private $user;
-    private $classManager;
+    private $userManager;
 
-    public function __construct($user, $classManager) {
-        $this->user = $user;
-        $this->classManager = $classManager;
+    public function __construct($userManager) {
+        $this->userManager = $userManager;
     }
 
-    public function handleSearch($search) {
-        return $this->user->getUsers($search);
+    public function searchUsers($search) {
+        return $this->userManager->getUsers($search);
     }
 
-    public function handleUpdateStatus($userId, $lastName, $firstName, $email, $status) {
-        $this->user->updateUser($userId, $lastName, $firstName, $email, $status);
+    public function updateUser($userId, $lastName, $firstName, $email, $status) {
+        return $this->userManager->updateUser($userId, $lastName, $firstName, $email, $status);
     }
 
-    public function handleDeleteClass($userId, $classId) {
-        $this->user->deleteClass($userId, $classId);
+    public function deleteUser($userId) {
+        return $this->userManager->deleteUser($userId);
+    }
+    public function getUserById($userId) {
+        return $this->userManager->getUserById($userId);
     }
 
     public function getAllClasses() {
-        return $this->classManager->getAllClasses();
+        return $this->userManager->getAllClasses();
     }
-    
-    public function handleDeleteUser($userId) {
-        $this->user->deleteUser($userId);
+
+    public function getUserClasses($userId) {
+        return $this->userManager->getUserClasses($userId);
+    }
+
+    public function addUserClass($userId, $classId) {
+        return $this->userManager->addUserClass($userId, $classId);
+    }
+
+    public function deleteUserClass($userId, $classId) {
+        return $this->userManager->deleteUserClass($userId, $classId);
     }
 }
-?>
