@@ -3,7 +3,7 @@ include_once '../include/Config.php'; // Vérifiez que $pdo est correctement con
 include_once '../classes/User.php';
 include_once '../include/pdo.php';
 include_once '../classes/UserManager.php';
-
+include_once '../pages/Login.php';
 
 // Vérification si le formulaire est soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Création de l'utilisateur
         if ($userManager->createUser($nom, $prenom, $email, $motdepasse)) {
             // Si réussi, redirection vers la page de connexion
-            header("Location: Login.php?success=1");
+            header("Location: ../pages/Login.php?success=1");
             exit();
         } else {
             // En cas d'erreur

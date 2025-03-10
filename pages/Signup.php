@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="mt-3 text-center">
-            <a href="login.php">Se connecter</a>
+            <a href="../pages/Login.php">Se connecter</a>
         </div>
     </div>
 
