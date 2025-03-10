@@ -1,6 +1,6 @@
 <?php
 // Inclure les fichiers nécessaires
-include_once('partials/header.php');
+include_once('../partials/header.php');
 
 // Vérifiez si idCourse a été envoyé via POST
 $idCourse = isset($_POST['idCourse']) ? $_POST['idCourse'] : null;

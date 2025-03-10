@@ -14,7 +14,7 @@ $query = "SELECT s.SubName, CONCAT(u.FirstName, ' ', u.LastName) as TeacherName,
           FROM Subject s
           JOIN course sc ON s.idSubject = sc.SubjectID
           JOIN user u ON sc.teacherID = u.idUser
-          JOIN Class c ON sc.classID = c.idClasse
+          JOIN class c ON sc.classID = c.idClasse
           WHERE sc.classID = :classID";  
           
 $stmt = $pdo->prepare($query);

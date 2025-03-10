@@ -1,9 +1,9 @@
 <?php
 session_start(); 
 $title = 'Agenda';
-include_once('partials/header.php');     
-include_once('include/Config.php');
-include_once('include/pdo.php');
+include_once('../partials/header.php');     
+include_once('../include/Config.php');
+include_once('../include/pdo.php');
 // Vérification si l'utilisateur est un professeur
 if ($_SESSION['user_status'] !== 'Prof') {
     die('Accès non autorisé'); // Optionnel : Empêcher l'accès aux non-professeurs
@@ -16,7 +16,7 @@ $query = "SELECT s.SubName, CONCAT(u.FirstName, ' ', u.LastName) as TeacherName,
           FROM Subject s
           JOIN course sc ON s.idSubject = sc.SubjectID
           JOIN user u ON sc.teacherID = u.idUser
-          JOIN Class c ON sc.classID = c.idClasse
+          JOIN class c ON sc.classID = c.idClasse
           WHERE sc.teacherID = :userId";
 
 $stmt = $pdo->prepare($query);

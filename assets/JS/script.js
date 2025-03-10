@@ -81,7 +81,7 @@ document.getElementById("saveButton").addEventListener("click", async function(e
     }
 
     // Récupérer la signature
-    const signatureData = canvas.toDataURL("image/png");
+    const signatureData = canvas.toDataURL("../image/png");
     document.getElementById("signatureData").value = signatureData;
 
     // Message de confirmation

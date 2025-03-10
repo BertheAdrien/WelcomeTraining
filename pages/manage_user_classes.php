@@ -12,7 +12,7 @@ $userController = new UserController($userManager);
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
 if (!$userId) {
-    header('Location: admin_users.php');
+    header('Location: ../pages/admin_users.php');
     exit();
 }
 
