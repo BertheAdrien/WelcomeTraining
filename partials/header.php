@@ -8,6 +8,7 @@ if (!isset($_SESSION['idUser'])) {
     header('Location: ../pages/Login.php');
     exit();
 }
+date_default_timezone_set('Europe/Paris');
 
 function getUserClasses($userId, $pdo) {
     $classStmt = $pdo->prepare("

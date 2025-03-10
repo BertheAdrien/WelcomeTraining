@@ -21,8 +21,8 @@ $students = $courseManager->getStudentsByCourse($courseId);
 $queryCourse = "
     SELECT s.SubName, sc.StartDateTime, sc.EndDateTime, c.ClassName
     FROM course sc
-    JOIN Subject s ON s.idSubject = sc.SubjectID
-    JOIN Class c ON sc.classID = c.idClasse
+    JOIN subject s ON s.idSubject = sc.SubjectID
+    JOIN class c ON sc.classID = c.idClasse
     WHERE sc.idCourse = :courseId AND sc.teacherID = :teacherId";
 
 $stmtCourse = $pdo->prepare($queryCourse);
