@@ -18,7 +18,7 @@ class ClassManager
     // 🔹 Ajouter une nouvelle classe
     public function addClass(string $className): bool {
         $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
-        return $stmt->execute(['ClassName' => $className]);
+        return $stmt->execute(['className' => $className]);
     }
 
     // 🔹 Supprimer une classe
