@@ -16,6 +16,7 @@ $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDa
 
 echo($_SESSION['class_name']);
 echo($_SESSION['idUser']);
+var_dump($_SESSION);
 
 
 ?>
