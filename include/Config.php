@@ -4,7 +4,7 @@ class Database {
     private $pdo;
 
     public function __construct() {
-        $host = '127.0.0.1';
+        $host = 'localhost';
         $dbname = 'welcometraining';
         $username = 'root';
         $password = 'Pokemon!!72380';
