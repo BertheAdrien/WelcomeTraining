@@ -20,7 +20,7 @@ error_reporting(E_ALL);
 <html>
 <body class="bg-light">
     <div class="container py-4">
-        <h1 class="text-center mb-4">Gestion des utilisateurs stp</h1>
+        <h1 class="text-center mb-4">Gestion des utilisateurs</h1>
 
         <!-- Barre de recherche -->
         <form method="POST" class="mb-4">
