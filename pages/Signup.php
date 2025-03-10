@@ -1,5 +1,5 @@
 
-<?php include_once('include/checkSignup.php'); ?>
+<?php include_once('../include/checkSignup.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
