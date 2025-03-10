@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'Config.php';
+include_once '../include/Config.php';
 include_once '../include/pdo.php';
 include_once '../classes/UserManager.php';
 

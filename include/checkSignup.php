@@ -1,8 +1,8 @@
 <?php
-include_once 'Config.php'; // Vérifiez que $pdo est correctement configuré ici
-include_once 'classes/User.php';
-include_once('include/pdo.php');
-include_once('classes/UserManager.php');
+include_once '../include/Config.php'; // Vérifiez que $pdo est correctement configuré ici
+include_once '../classes/User.php';
+include_once '../include/pdo.php';
+include_once '../classes/UserManager.php';
 
 
 // Vérification si le formulaire est soumis
