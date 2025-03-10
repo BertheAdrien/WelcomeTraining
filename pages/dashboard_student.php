@@ -73,7 +73,7 @@ foreach ($courses as $course) {
                     </div>
                 <?php elseif ($signatureStatus['can_sign'] == 1 && $isWithinTimeFrame): ?>
                     <!-- L'élève peut signer -->
-                    <form method="POST" action="drawSignature.php">
+                    <form method="POST" action="../drawSignature.php">
                         <input type="hidden" name="idCourse" value="<?php echo $course['idCourse']; ?>">
                         <button type="submit" class="btn btn-primary mt-3 w-100">Signer</button>
                     </form>
