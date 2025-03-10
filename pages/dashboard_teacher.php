@@ -36,6 +36,7 @@ $courses = $teacherManager->getTodayTeacherCourses($idUser);
             $endTime = strtotime($course['EndDateTime']);
             $now = date('Y-m-d H:i:s', time());
             $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
+            var_dump($isCurrentCourse);
 
         ?>
         <div class="col-12 d-flex justify-content-center">
