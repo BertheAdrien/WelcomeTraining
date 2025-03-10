@@ -8,8 +8,7 @@ include_once('../classes/UserManager.php');
 $userManager = new UserManager($pdo);
 $classes = $userManager->getUserClasses($_SESSION['idUser']);
 
-$classID = $classes['idClasse'];
-
+$classID = $classes[0]['idClasse'];
 
 if ($classID) {
     echo $classID;
