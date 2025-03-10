@@ -24,8 +24,7 @@ class TeacherManager {
         $stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
         $stmt->execute();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($result);
-        return $result;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     }
 }

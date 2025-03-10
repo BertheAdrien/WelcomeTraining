@@ -7,7 +7,9 @@ include_once('../classes/TeacherManager.php'); // Ajout de la classe
 $idUser = $_SESSION['idUser'];
 $teacherManager = new TeacherManager($pdo);
 $courses = $teacherManager->getTodayTeacherCourses($idUser);
-var_dump($courses);
+
+$now = time();
+$isCurrentCourse = ($now >= $startTime && $now <= $endTime);
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +36,6 @@ var_dump($courses);
         <?php foreach ($courses as $course): 
             $startTime = strtotime($course['StartDateTime']);
             $endTime = strtotime($course['EndDateTime']);
-            $now = time();
-            $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
         ?>
         <div class="col-12 d-flex justify-content-center">
             <div class="card shadow-sm cours-bloc" style="max-width: 400px; width: 100%;">
