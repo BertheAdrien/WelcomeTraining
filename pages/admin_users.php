@@ -1,19 +1,15 @@
 <?php
-// include_once('../include/pdo.php');
-// include_once('../classes/UserManager.php');
+include_once('../include/pdo.php');
+include_once('../classes/UserManager.php');
 // include_once('../controllers/UserController.php');
 include_once('../partials/header.php');
 
 
-// $userManager = new UserManager($pdo);
+$userManager = new UserManager($pdo);
 // $userController = new UserController($userManager);
 
 // $search = isset($_POST['search']) ? $_POST['search'] : '';
 // $users = $userController->searchUsers($search);
-
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
 
 ?>
 <!DOCTYPE html>
