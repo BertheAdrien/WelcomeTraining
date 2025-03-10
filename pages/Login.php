@@ -1,5 +1,8 @@
 
-<?php include_once('../include/loginCheck.php'); ?>
+<?php include_once('../include/loginCheck.php'); 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +12,8 @@
     <title>Connexion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/CSS/dashboard.css">
+
+    
 </head>
 
 <body class="bg-light">
