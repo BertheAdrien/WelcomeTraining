@@ -6,7 +6,7 @@ include_once('../classes/Course.php');
 
 // Vérifier si l'utilisateur est un professeur
 if (!isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
-    header('Location: login.php');
+    header('Location: ../pages/Login.php');
     exit();
 }
 

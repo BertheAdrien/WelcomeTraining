@@ -4,7 +4,7 @@ include_once('../include/pdo.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['idUser']) || $_SESSION['user_status'] !== 'Prof') {
-    header('Location: login.php');
+    header('Location: ../pages/Login.php');
     exit();
 }
 

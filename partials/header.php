@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['idUser'])) {
-    header('Location: ../pages/login.php');
+    header('Location: ../pages/Login.php');
     exit();
 }
 
