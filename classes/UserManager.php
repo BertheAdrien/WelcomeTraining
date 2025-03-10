@@ -54,15 +54,15 @@ class UserManager {
     }
 
     public function getAllClasses() {
-        $stmt = $this->pdo->query("SELECT * FROM Class");
+        $stmt = $this->pdo->query("SELECT * FROM class");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUserClasses($userId) {
         $stmt = $this->pdo->prepare("
-            SELECT Class.idClasse, Class.ClassName 
+            SELECT class.idClasse, class.ClassName 
             FROM user_has_class 
-            JOIN Class ON user_has_class.Class_idClasse = Class.idClasse
+            JOIN class ON user_has_class.class_idClasse = class.idClasse
             WHERE user_has_class.User_idUser = :userId
         ");
         $stmt->bindParam(':userId', $userId);
@@ -73,7 +73,7 @@ class UserManager {
     public function addUserClass($userId, $classId) {
         // Vérifier si la classe est déjà associée à l'utilisateur
         $checkStmt = $this->pdo->prepare("
-            SELECT * FROM user_has_class WHERE User_idUser = :userId AND Class_idClasse = :classId
+            SELECT * FROM user_has_class WHERE User_idUser = :userId AND class_idClasse = :classId
         ");
         $checkStmt->bindParam(':userId', $userId);
         $checkStmt->bindParam(':classId', $classId);
@@ -82,7 +82,7 @@ class UserManager {
         if ($checkStmt->rowCount() == 0) {
             // Associer la classe à l'utilisateur
             $insertStmt = $this->pdo->prepare("
-                INSERT INTO user_has_class (User_idUser, Class_idClasse) VALUES (:userId, :classId)
+                INSERT INTO user_has_class (User_idUser, class_idClasse) VALUES (:userId, :classId)
             ");
             $insertStmt->bindParam(':userId', $userId);
             $insertStmt->bindParam(':classId', $classId);
@@ -94,7 +94,7 @@ class UserManager {
 
     public function deleteUserClass($userId, $classId) {
         $stmt = $this->pdo->prepare("
-            DELETE FROM user_has_class WHERE User_idUser = :userId AND Class_idClasse = :classId
+            DELETE FROM user_has_class WHERE User_idUser = :userId AND class_idClasse = :classId
         ");
         $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':classId', $classId);
@@ -105,7 +105,7 @@ class UserManager {
         $stmt = $this->pdo->prepare("SELECT u.FirstName, u.LastName, u.Email 
                                      FROM User u
                                      JOIN user_has_class uc ON u.idUser = uc.User_idUser
-                                     WHERE uc.Class_idClasse = :classId AND u.Status = 'Student'");
+                                     WHERE uc.class_idClasse = :classId AND u.Status = 'Student'");
         $stmt->bindParam(':classId', $classId, PDO::PARAM_INT);
         $stmt->execute();
 
