@@ -14,8 +14,8 @@ $courseManager = new Course($pdo);
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
-if(empty($courses)) {
-    echo "Aucun cours trouvé.";
+if(empty($classID)) {
+    echo "pas de classe";
 } else {
     
 }
