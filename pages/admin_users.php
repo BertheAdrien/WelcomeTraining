@@ -5,15 +5,15 @@
 include_once('../partials/header.php');
 
 
-$userManager = new UserManager($pdo);
-$userController = new UserController($userManager);
+// $userManager = new UserManager($pdo);
+// $userController = new UserController($userManager);
 
-$search = isset($_POST['search']) ? $_POST['search'] : '';
-$users = $userController->searchUsers($search);
+// $search = isset($_POST['search']) ? $_POST['search'] : '';
+// $users = $userController->searchUsers($search);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 ?>
 <!DOCTYPE html>
