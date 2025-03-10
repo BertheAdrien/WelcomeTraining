@@ -10,7 +10,7 @@ class SubjectManager {
     // Fonction pour ajouter une matière
     public function addSubject($subjectName) {
         try {
-            $stmt = $this->pdo->prepare("INSERT INTO Subject (SubName) VALUES (:subject_name)");
+            $stmt = $this->pdo->prepare("INSERT INTO subject (SubName) VALUES (:subject_name)");
             $stmt->bindParam(':subject_name', $subjectName);
             $stmt->execute();
             return 'La matière a été ajoutée avec succès.';
@@ -22,7 +22,7 @@ class SubjectManager {
     // Fonction pour supprimer une matière
     public function deleteSubject($subjectId) {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM Subject WHERE idSubject = :subject_id");
+            $stmt = $this->pdo->prepare("DELETE FROM subject WHERE idSubject = :subject_id");
             $stmt->bindParam(':subject_id', $subjectId);
             $stmt->execute();
             return 'La matière a été supprimée avec succès.';
@@ -36,7 +36,7 @@ class SubjectManager {
         try {
             // Préparer la requête d'insertion
             $stmt = $this->pdo->prepare(
-                "INSERT INTO Course (SubjectID, ClassID, TeacherID, StartDateTime, EndDateTime) 
+                "INSERT INTO course (SubjectID, ClassID, TeacherID, StartDateTime, EndDateTime) 
                 VALUES (:subject_id, :class_id, :teacher_id, :start_datetime, :end_datetime)"
             );
     

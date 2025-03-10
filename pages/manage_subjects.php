@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $_SESSION['message'] = $message;
         $_SESSION['message_type'] = 'success';
-        header('Location: manage_subjects.php');
+        header('Location: ../pages/manage_subjects.php');
         exit();
     }
 }

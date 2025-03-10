@@ -11,9 +11,9 @@ class TeacherManager {
 
         $query = "
             SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime, c.ClassName
-            FROM Subject s
+            FROM subject s
             JOIN course sc ON s.idSubject = sc.SubjectID
-            JOIN Class c ON sc.classID = c.idClasse
+            JOIN class c ON sc.classID = c.idClasse
             WHERE sc.teacherID = :teacherId
             AND DATE(sc.StartDateTime) = :currentDate
             AND sc.EndDateTime > CURRENT_TIMESTAMP
