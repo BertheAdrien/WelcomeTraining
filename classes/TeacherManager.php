@@ -16,7 +16,7 @@ class TeacherManager {
             JOIN class c ON sc.classID = c.idClasse
             WHERE sc.teacherID = :teacherId
             AND DATE(sc.StartDateTime) = :currentDate
-            AND sc.EndDateTime > CURRENT_TIMESTAMP
+            -- AND sc.EndDateTime > CURRENT_TIMESTAMP
             ORDER BY sc.StartDateTime ASC";
 
         $stmt = $this->pdo->prepare($query);
