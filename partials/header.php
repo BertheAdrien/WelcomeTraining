@@ -38,7 +38,7 @@ $title = isset($title) ? $title : 'Welcome training';
     <link rel="stylesheet" href="../assets/CSS/dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/calendar.css" rel="stylesheet">
+    <link href="../assets/CSS/calendar.css" rel="stylesheet">
 </head>
 <body>
 
