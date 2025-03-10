@@ -5,16 +5,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['idUser'])) {
-    header('Location: Login.php');
+    header('Location: ../pages/login.php');
     exit();
 }
 
 function getUserClasses($userId, $pdo) {
     $classStmt = $pdo->prepare("
-        SELECT Class.ClassName, Class.idClasse
-        FROM User_has_Class
-        INNER JOIN Class ON User_has_Class.Class_idClasse = Class.idClasse
-        WHERE User_has_Class.User_idUser = :userId
+        SELECT class.ClassName, class.idClasse
+        FROM user_has_class
+        INNER JOIN class ON user_has_class.class_idClasse = class.idClasse
+        WHERE user_has_class.user_idUser = :userId
     ");
     $classStmt->bindParam(':userId', $userId);
     $classStmt->execute();
@@ -32,16 +32,13 @@ $title = isset($title) ? $title : 'Welcome training';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($title); ?></title>
-    <link href="assets/css/calendar.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/CSS/dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="assets/CSS/dashboard.css">
+    <link rel="stylesheet" href="../assets/CSS/dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/calendar.css" rel="stylesheet">
-    
-
-
+    <link href="../assets/css/calendar.css" rel="stylesheet">
 </head>
 <body>
 
@@ -60,13 +57,13 @@ if ($_SESSION['user_status'] === 'Student') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'dashboard_student.php' ? 'active font-weight-bold' : ''; ?>" href="dashboard_student.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'dashboard_student.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/dashboard_student.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'view_shedule_student.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_student.php">Calendrier</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_student.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/view_shedule_student.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="Logout.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
@@ -91,13 +88,13 @@ if ($_SESSION['user_status'] === 'Prof') {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'dashboard_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="dashboard_teacher.php">Mes cours</a>
+                    <a class="nav-link <?php echo $current_page === 'dashboard_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/dashboard_teacher.php">Mes cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'view_shedule_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_teacher.php">Calendrier</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_teacher.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/view_shedule_teacher.php">Calendrier</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="Logout.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $current_page === 'Logout.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
@@ -121,19 +118,19 @@ if ($_SESSION['user_status'] === 'Admin') {
         <div class="collapse navbar-collapse" id="adminNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'admin_users.php' ? 'active font-weight-bold' : ''; ?>" href="admin_users.php">Gérer les utilisateurs</a>
+                    <a class="nav-link <?php echo $current_page === 'admin_users.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/admin_users.php">Gérer les utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="manage_classes.php">Gérer les classes</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_classes.php">Gérer les classes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="manage_subjects.php">Gérer les cours</a>
+                    <a class="nav-link <?php echo $current_page === 'manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_subjects.php">Gérer les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'view_shedule_admin.php' ? 'active font-weight-bold' : ''; ?>" href="view_shedule_admin.php">Voir les cours</a>
+                    <a class="nav-link <?php echo $current_page === 'view_shedule_admin.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/view_shedule_admin.php">Voir les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active font-weight-bold' : ''; ?>" href="logout.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/logout.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
