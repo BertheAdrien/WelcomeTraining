@@ -1,12 +1,13 @@
 <?php 
 $title = 'Gestion des classes';
 include_once '../partials/header.php';
+include_once '../include/Config.php';
 include_once '../include/pdo.php';
 include_once '../classes/ClassManager.php';
 
 // Instancier le gestionnaire de classes
-// $classManager = new ClassManager($pdo);
-// $classes = $classManager->getAllClasses();
+$classManager = new ClassManager($pdo);
+$classes = $classManager->getAllClasses();
 ?>
 
 <!DOCTYPE html>
