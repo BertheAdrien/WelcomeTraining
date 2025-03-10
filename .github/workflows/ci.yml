@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Add safe directory
+        run: git config --global --add safe.directory $(pwd)
+
       - name: Push to server
         uses: appleboy/ssh-action@master
         with:
@@ -16,4 +20,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
+            git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
             sudo git pull
