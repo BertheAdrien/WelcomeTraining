@@ -63,11 +63,13 @@ class UserManager {
             SELECT class.idClasse, class.ClassName 
             FROM user_has_class 
             JOIN class ON user_has_class.Class_idClasse = class.idClasse
-            WHERE user_has_class.User_idUser = 5
+            WHERE user_has_class.User_idUser = :userId
         ");
-        // $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($result);
+        return $result;
     }
 
     public function addUserClass($userId, $classId) {
