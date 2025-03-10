@@ -9,7 +9,7 @@ $userManager = new UserManager($pdo);
 $userController = new UserController($userManager);
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
-// $users = $userController->searchUsers($search);
+$users = $userController->searchUsers($search);
 
 ?>
 <!DOCTYPE html>
