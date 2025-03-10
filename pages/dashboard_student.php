@@ -9,7 +9,12 @@ $userManager = new UserManager($pdo);
 $classes = $userManager->getUserClasses($_SESSION['idUser']);
 
 $classID = $classes['idClasse'];
-$className = $classes['ClassName'];
+
+if ($classID) {
+    echo $classID;
+} else {
+    echo "Aucune classe associée à ce compte.";
+}
 
 $currentDate = date('Y-m-d');
 $currentDateTime = date('Y-m-d H:i:s');
