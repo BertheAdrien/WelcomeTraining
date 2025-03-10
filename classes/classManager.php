@@ -7,12 +7,12 @@ class ClassManager {
         $this->pdo = $pdo;
     }
 
-    // // 🔹 Récupérer toutes les classes
-    // public function getAllClasses(): array {
-    //     $stmt = $this->pdo->prepare("SELECT * FROM class");
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
+    // 🔹 Récupérer toutes les classes
+    public function getAllClasses(): array {
+        $stmt = $this->pdo->prepare("SELECT * FROM class");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     // 🔹 Ajouter une nouvelle classe
     public function addClass(string $className): bool {
