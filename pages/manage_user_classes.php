@@ -5,8 +5,8 @@ include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
 include_once('../controllers/UserController.php');
 
-// $userManager = new UserManager($pdo);
-// $userController = new UserController($userManager);
+$userManager = new UserManager($pdo);
+$userController = new UserController($userManager);
 
 // Récupérer l'ID de l'utilisateur depuis l'URL
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
