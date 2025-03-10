@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         exit();
     } else {
-        $error = "Email ou mot de passe incorrect.";
+        $error = "Email ou mot de passe incorrect";
     }
 }
 ?>
