@@ -7,6 +7,7 @@ include_once('../classes/Course.php');
 $classID = $_SESSION['class_id'];
 $currentDate = date('Y-m-d');
 $currentDateTime = date('Y-m-d H:i:s');
+echo $classID;
 
 // Instanciation de la classe Course
 $courseManager = new Course($pdo);
@@ -14,10 +15,6 @@ $courseManager = new Course($pdo);
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
-echo '<pre>';
-print_r($classID);
-print_r($courses);
-echo '</pre>';
 ?>
 
 <!DOCTYPE html>
