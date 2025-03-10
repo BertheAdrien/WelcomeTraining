@@ -41,8 +41,8 @@ class Course
             SELECT u.idUser, u.FirstName, u.LastName, 
                    ca.can_sign, ca.signature_path
             FROM user u
-            JOIN user_has_class uhc ON u.idUser = uhc.user_idUser
-            JOIN class c ON uhc.class_idClasse = c.idClasse
+            JOIN user_has_class uhc ON u.idUser = uhc.User_idUser
+            JOIN class c ON uhc.Class_idClasse = c.idClasse
             JOIN course sc ON c.idClasse = sc.classID
             LEFT JOIN course_attendance ca ON u.idUser = ca.student_id AND ca.course_id = :courseId
             WHERE sc.idCourse = :courseId 

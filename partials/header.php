@@ -13,8 +13,8 @@ function getUserClasses($userId, $pdo) {
     $classStmt = $pdo->prepare("
         SELECT class.ClassName, class.idClasse
         FROM user_has_class
-        INNER JOIN class ON user_has_class.class_idClasse = class.idClasse
-        WHERE user_has_class.user_idUser = :userId
+        INNER JOIN class ON user_has_class.Class_idClasse = class.idClasse
+        WHERE user_has_class.User_idUser = :userId
     ");
     $classStmt->bindParam(':userId', $userId);
     $classStmt->execute();
