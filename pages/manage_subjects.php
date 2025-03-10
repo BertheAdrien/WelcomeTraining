@@ -9,7 +9,7 @@ include_once '../classes/SubjectManager.php'; // On inclut la classe qui gère l
 $subjectManager = new SubjectManager($pdo);
 
 // Récupérer toutes les matières depuis la base de données
-$query = "SELECT * FROM Subject";
+$query = "SELECT * FROM subject";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
