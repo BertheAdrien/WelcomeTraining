@@ -40,7 +40,7 @@ $title = isset($title) ? $title : 'Welcome training';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/CSS/calendar.css" rel="stylesheet">
 </head>
-<body>
+<header>
 
 <?php
 $current_page = basename($_SERVER['PHP_SELF']); // Récupère le nom du fichier courant
@@ -144,5 +144,5 @@ if ($_SESSION['user_status'] === 'Admin') {
 <!-- Contenu de la page ici -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+</header>
 </html>
