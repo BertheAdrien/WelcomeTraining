@@ -5,15 +5,13 @@ include_once '../include/Config.php';
 include_once '../include/pdo.php';
 include_once '../classes/ClassManager.php';
 
-// // Instancier le gestionnaire de classes
-// $classManager = new ClassManager($pdo);
+// Instancier le gestionnaire de classes
+$classManager = new ClassManager($pdo);
 
-// // Récupérer toutes les classes
-// $classes = $classManager->getAllClasses();
+// Récupérer toutes les classes
+$classes = $classManager->getAllClasses();
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
 <body class="bg-light">
     <div class="container py-4">
         <h1 class="text-center mb-4">Gestion des classes</h1>
