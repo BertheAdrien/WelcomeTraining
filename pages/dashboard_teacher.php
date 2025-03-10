@@ -32,11 +32,13 @@ $courses = $teacherManager->getTodayTeacherCourses($idUser);
 
     <div class="row g-4">
         <?php foreach ($courses as $course): 
-            $startTime = strtotime($course['StartDateTime']);
-            $endTime = strtotime($course['EndDateTime']);
-            $now = date('Y-m-d H:i:s', time());
+            $now = time(); // Timestamp actuel
+            $startTime = strtotime($course['StartDateTime']); // Convertit en timestamp
+            $endTime = strtotime($course['EndDateTime']); // Convertit en timestamp
+
             $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
-            var_dump($isCurrentCourse);
+
+            echo date_default_timezone_get();
 
         ?>
         <div class="col-12 d-flex justify-content-center">
