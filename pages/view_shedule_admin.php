@@ -7,7 +7,7 @@ include_once('../include/Config.php');
 include_once('../include/pdo.php');
 
 $isAdmin = $_SESSION['user_status'] === 'Admin';
-    $course = "SELECT * FROM Course";
+    $course = "SELECT * FROM course";
     $courseStmt = $pdo->prepare($course);
     $courseStmt->execute();
     $events = $courseStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +25,7 @@ $isAdmin = $_SESSION['user_status'] === 'Admin';
                     <option value="">Sélectionner une classe</option>
                     <?php
                     // Récupérer la liste des classes
-                    $classQuery = "SELECT idClasse, ClassName FROM Class";
+                    $classQuery = "SELECT idClasse, ClassName FROM class";
                     $classStmt = $pdo->prepare($classQuery);
                     $classStmt->execute();
                     $classes = $classStmt->fetchAll(PDO::FETCH_ASSOC);
