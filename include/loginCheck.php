@@ -25,13 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirection selon le statut
         switch ($_SESSION['user_status']) {
             case 'Admin':
-                header('Location: admin_users.php');
+                header('Location: ../pages/admin_users.php');
                 break;
             case 'Prof':
-                header('Location: dashboard_teacher.php');
+                header('Location: ../pages/dashboard_teacher.php');
                 break;
             default:
-                header('Location: dashboard_student.php');
+                header('Location: ../pages/dashboard_student.php');
                 break;
         }
         exit();
