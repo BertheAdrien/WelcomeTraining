@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Récupérer la classe associée
         $class = $userManager->getUserClasses($user['idUser']);
-        $_SESSION['class_name'] = $class ? $class['ClassName'] : null;
-        $_SESSION['class_id'] = $class ? $class['idClasse'] : null;
+        $_SESSION['class_name'] = $class['ClassName'];
+        $_SESSION['class_id'] = $class['idClasse'];
 
         // Redirection selon le statut
         switch ($_SESSION['user_status']) {
