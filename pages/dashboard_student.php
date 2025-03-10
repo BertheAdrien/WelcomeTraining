@@ -14,7 +14,7 @@ $courseManager = new Course($pdo);
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
-echo($_SESSION['idUser']);
+echo($_SESSION['class_id']);
 
 ?>
 
