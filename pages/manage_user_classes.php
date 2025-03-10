@@ -16,9 +16,9 @@ if (!$userId) {
     exit();
 }
 
-$user = $userController->getUserById($userId);
-$classes = $userController->getAllClasses();
-$userClasses = $userController->getUserClasses($userId);
+$user = $userManager->getUserById($userId);
+$classes = $userManager->getAllClasses();
+$userClasses = $userManager->getUserClasses($userId);
 
 // Ajouter une classe
 if (isset($_POST['add_class'])) {
