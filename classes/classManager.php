@@ -9,14 +9,9 @@ class ClassManager {
 
     // 🔹 Récupérer toutes les classes
     public function getAllClasses(): array {
-        try {
-            $stmt = $this->pdo->prepare("SELECT * FROM class");
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Erreur dans getAllClasses: ' . $e->getMessage());
-            return [];
-        }
+        $stmt = $this->pdo->prepare("SELECT * FROM class");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // 🔹 Ajouter une nouvelle classe
