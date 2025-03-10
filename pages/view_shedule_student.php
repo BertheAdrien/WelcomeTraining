@@ -11,7 +11,7 @@ $userId = $_SESSION['idUser'];  // Identifiant de l'utilisateur connecté
 
 // Requête pour récupérer les cours de l'élève dans sa classe
 $query = "SELECT s.SubName, CONCAT(u.FirstName, ' ', u.LastName) as TeacherName, c.ClassName, sc.StartDateTime, sc.EndDateTime 
-          FROM Subject s
+          FROM subject s
           JOIN course sc ON s.idSubject = sc.SubjectID
           JOIN user u ON sc.teacherID = u.idUser
           JOIN class c ON sc.classID = c.idClasse
@@ -51,6 +51,6 @@ foreach ($courses as $course) {
     </script>
     
     <!-- Script personnalisé pour initialiser le calendrier -->
-    <script src="../assets/js/calendar.js"></script>
+    <script src="../assets/JS/calendar.js"></script>
 </body>
 </html>

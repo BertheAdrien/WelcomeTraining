@@ -51,6 +51,6 @@ $isAdmin = $_SESSION['user_status'] === 'Admin';
     </script>
     
     <!-- Script personnalisé pour initialiser le calendrier -->
-    <script src="../assets/js/calendarAdmin.js"></script>
+    <script src="../assets/JS/calendarAdmin.js"></script>
 </body>
 </html>
