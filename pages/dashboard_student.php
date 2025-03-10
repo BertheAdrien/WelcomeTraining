@@ -15,7 +15,7 @@ $courseManager = new Course($pdo);
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
 echo($_SESSION['class_id']);
-echo($_SESSION['id_user']);
+echo($_SESSION['idUser']);
 
 
 if(empty($classID)) {
