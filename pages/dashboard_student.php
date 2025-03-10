@@ -13,6 +13,10 @@ $courseManager = new Course($pdo);
 
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
+
+echo '<pre>';
+print_r($courses);
+echo '</pre>';
 ?>
 
 <!DOCTYPE html>
