@@ -16,7 +16,7 @@ class Course
                   JOIN course sc ON s.idSubject = sc.SubjectID
                   WHERE sc.classID = :classID 
                   AND DATE(sc.StartDateTime) = :currentDate
-                --   AND sc.EndDateTime > :currentDateTime
+                  AND sc.EndDateTime > :currentDateTime
                   ORDER BY sc.StartDateTime ASC";
 
         $stmt = $this->pdo->prepare($query);
