@@ -9,6 +9,7 @@ $teacherManager = new TeacherManager($pdo);
 $courses = $teacherManager->getTodayTeacherCourses($idUser);
 
 $now = time();
+echo $now;
 $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
 ?>
 
