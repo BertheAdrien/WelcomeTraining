@@ -4,11 +4,16 @@ include_once('../classes/UserManager.php');
 include_once('../controllers/UserController.php');
 include_once('../partials/header.php');
 
+
 $userManager = new UserManager($pdo);
 $userController = new UserController($userManager);
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
 $users = $userController->searchUsers($search);
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 
 <body class="bg-light">
@@ -57,7 +62,7 @@ $users = $userController->searchUsers($search);
                                 </select>
                             </td>
                             <td>
-                                <a href="manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">
+                                <a href="../pages/manage_user_classes.php?user_id=<?php echo $user['idUser']; ?>" class="btn btn-primary">
                                     Affecter une classe
                                 </a>
                             </td>
