@@ -4,7 +4,7 @@ include_once '../include/pdo.php';
 include_once '../classes/ClassManager.php';
 
 // Instancier le gestionnaire de classes
-// $classManager = new ClassManager($pdo);
+$classManager = new ClassManager($pdo);
 
 // 🔹 Ajout d'une classe
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_class'])) {
