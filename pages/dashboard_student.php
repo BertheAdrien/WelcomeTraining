@@ -6,7 +6,7 @@ include_once('../classes/Course.php');
 include_once('../classes/UserManager.php');
 
 $userManager = new UserManager($pdo);
-$classes = $userManager->getUserClasses(4);
+$classes = $userManager->getUserClasses(5);
 
 $classID = $classes['idClasse'];
 
