@@ -12,7 +12,7 @@ $currentDateTime = date('Y-m-d H:i:s');
 $courseManager = new Course($pdo);
 
 // Récupération des cours de la journée
-$courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
+$courses = $courseManager->getCoursesForClass(4, $currentDate, $currentDateTime);
 
 if(empty($classID)) {
     echo "pas de classe";
