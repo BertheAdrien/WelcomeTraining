@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['last_name'] = $user['LastName'];
 
         // Récupérer la classe associée
-        $class = $userManager->getUserClasses($_SESSION['idUser']);
+        $class = $userManager->getUserClasses($user['idUser']);
         $_SESSION['class_name'] = $class['ClassName'];
         $_SESSION['class_id'] = $class['idClasse'];
 

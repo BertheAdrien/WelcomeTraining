@@ -67,7 +67,7 @@ class UserManager {
         ");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
     }
 
     public function addUserClass($userId, $classId) {
