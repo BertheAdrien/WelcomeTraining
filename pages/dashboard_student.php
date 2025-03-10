@@ -20,6 +20,8 @@ $courseManager = new Course($pdo);
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
+var_dump($courses);
+
 
 ?>
 
