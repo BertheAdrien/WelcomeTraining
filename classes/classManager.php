@@ -1,6 +1,7 @@
 <?php
 
-class ClassManager {
+class ClassManager 
+{
     private $pdo;
 
     public function __construct($pdo) {
@@ -17,12 +18,12 @@ class ClassManager {
     // 🔹 Ajouter une nouvelle classe
     public function addClass(string $className): bool {
         $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
-        return $stmt->execute(['className' => $className]);
+        return $stmt->execute(['ClassName' => $className]);
     }
 
     // 🔹 Supprimer une classe
     public function deleteClass(int $classId): bool {
         $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :classId");
-        return $stmt->execute(['classId' => $classId]);
+        return $stmt->execute(['ClassId' => $classId]);
     }
 }
