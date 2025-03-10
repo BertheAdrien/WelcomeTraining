@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$filepath, $studentId, $courseId]);
 
         // Redirection vers le tableau de bord
-        header('Location: dashboard.php');
+        header('Location: /pages/dashboard_student.php');
         exit;
 
     } catch (PDOException $e) {
