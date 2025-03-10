@@ -17,7 +17,7 @@
                 <h1 class="text-center mb-4">Inscription</h1>
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <form action="../pages/Signup.php" method="POST">
+                        <form action="../include/checkSignup.php" method="POST">
                             <div class="mb-3">
                                 <label for="nom" class="form-label">Nom</label>
                                 <input type="text" class="form-control" id="nom" name="nom" required>
