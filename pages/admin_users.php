@@ -11,14 +11,11 @@ $userController = new UserController($userManager);
 $search = isset($_POST['search']) ? $_POST['search'] : '';
 $users = $userController->searchUsers($search);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 ?>
 
 <body class="bg-light">
     <div class="container py-4">
-        <h1 class="text-center mb-4">Gestion des utilisateurs</h1>
+        <h1 class="text-center mb-4">Gestion des utilisateurs stp</h1>
 
         <!-- Barre de recherche -->
         <form method="POST" class="mb-4">
