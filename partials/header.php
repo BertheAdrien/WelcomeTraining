@@ -121,13 +121,13 @@ if ($_SESSION['user_status'] === 'Admin') {
                     <a class="nav-link <?php echo $current_page === 'admin_users.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/admin_users.php">Gérer les utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_classes.php">Gérer les classes</a>
+                    <a class="nav-link <?php echo $current_page === '../pages/manage_classes.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_classes.php">Gérer les classes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_subjects.php">Gérer les cours</a>
+                    <a class="nav-link <?php echo $current_page === '../pages/manage_subjects.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/manage_subjects.php">Gérer les cours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $current_page === 'view_shedule_admin.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/view_shedule_admin.php">Voir les cours</a>
+                    <a class="nav-link <?php echo $current_page === '../pages/view_shedule_admin.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/view_shedule_admin.php">Voir les cours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $current_page === 'logout.php' ? 'active font-weight-bold' : ''; ?>" href="../pages/logout.php">Déconnexion</a>
