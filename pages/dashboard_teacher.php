@@ -5,9 +5,9 @@ include_once('../include/pdo.php');
 include_once('../classes/TeacherManager.php'); // Ajout de la classe
 
 $idUser = $_SESSION['idUser'];
-echo $idUser;
 $teacherManager = new TeacherManager($pdo);
 $courses = $teacherManager->getTodayTeacherCourses($idUser);
+var_dump($courses);
 ?>
 
 <!DOCTYPE html>
