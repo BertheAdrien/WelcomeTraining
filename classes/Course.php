@@ -14,7 +14,7 @@ class Course
         $query = "SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime
                   FROM subject s
                   JOIN course sc ON s.idSubject = sc.SubjectID
-                  WHERE sc.classID = :classID 
+                  WHERE sc.classID = :classID
                   AND DATE(sc.StartDateTime) = :currentDate
                   AND sc.EndDateTime > :currentDateTime
                   ORDER BY sc.StartDateTime ASC";

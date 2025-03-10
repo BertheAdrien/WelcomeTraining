@@ -15,6 +15,7 @@ $courseManager = new Course($pdo);
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
 
 echo '<pre>';
+print_r($classID);
 print_r($courses);
 echo '</pre>';
 ?>
