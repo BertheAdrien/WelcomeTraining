@@ -18,6 +18,9 @@ echo($_SESSION['class_name']);
 echo($_SESSION['idUser']);
 var_dump($_SESSION);
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 
 ?>
 
