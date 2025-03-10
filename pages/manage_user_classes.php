@@ -3,10 +3,8 @@ $title = 'Gestion des classes de l\'utilisateur';
 include_once('../partials/header.php');
 include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
-include_once('../controllers/UserController.php');
 
 $userManager = new UserManager($pdo);
-$userController = new UserController($userManager);
 
 // Récupérer l'ID de l'utilisateur depuis l'URL
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
@@ -23,7 +21,7 @@ $userClasses = $userManager->getUserClasses($userId);
 // Ajouter une classe
 if (isset($_POST['add_class'])) {
     $classId = $_POST['class_id'];
-    $userController->addUserClass($userId, $classId);
+    $userManager->addUserClass($userId, $classId);
     header("Location: ../pages/manage_user_classes.php?user_id=$userId");
     exit();
 }
@@ -31,7 +29,7 @@ if (isset($_POST['add_class'])) {
 // Supprimer une classe
 if (isset($_POST['delete_class'])) {
     $classId = $_POST['class_id'];
-    $userController->deleteUserClass($userId, $classId);
+    $userManager->deleteUserClass($userId, $classId);
     header("Location: ../pages/manage_user_classes.php?user_id=$userId");
     exit();
 }
