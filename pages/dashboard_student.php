@@ -3,8 +3,14 @@ include_once('../partials/header.php');
 include_once('../include/Config.php');
 include_once('../include/pdo.php');
 include_once('../classes/Course.php');
+include_once('../classes/UserManager.php');
 
-$classID = $_SESSION['class_id'];
+$userManager = new UserManager($pdo);
+$classes = $userManager->getUserClasses($_SESSION['idUser']);
+
+$classID = $classes['idClasse'];
+$className = $classes['ClassName'];
+
 $currentDate = date('Y-m-d');
 $currentDateTime = date('Y-m-d H:i:s');
 
@@ -13,13 +19,6 @@ $courseManager = new Course($pdo);
 
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
-
-echo($_SESSION['class_name']);
-echo($_SESSION['idUser']);
-var_dump($_SESSION);
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 
 ?>
@@ -32,7 +31,7 @@ ini_set('display_errors', 1);
     <div class="row mb-4">
         <div>
             <h4>Bonjour <?php echo htmlspecialchars($_SESSION['first_name']) . ' ' . htmlspecialchars($_SESSION['last_name']); ?></h4>
-            <h5><?php echo htmlspecialchars($_SESSION['class_name']) ?></h5>
+            <h5><?php echo htmlspecialchars($className) ?></h5>
         </div>
         <div>
             <h6><?php echo date('d-m-Y'); ?></h6>
