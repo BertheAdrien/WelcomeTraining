@@ -23,7 +23,7 @@ class ClassManager
 
     // 🔹 Supprimer une classe
     public function deleteClass(int $classId): bool {
-        $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :classId");
+        $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :idClasse");
         return $stmt->execute(['idClasse' => $classId]);
     }
 }
