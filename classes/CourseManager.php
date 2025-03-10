@@ -21,6 +21,7 @@ class CourseManager {
                   WHERE (s.SubName LIKE :search 
                          OR CONCAT(u.FirstName, ' ', u.LastName) LIKE :search 
                          OR c.ClassName LIKE :search)
+                         AND sc.EndDateTime > NOW()
                   ORDER BY sc.StartDateTime ASC";
 
         $stmt = $this->pdo->prepare($query);
