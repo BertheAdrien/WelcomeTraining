@@ -5,9 +5,9 @@ class Database {
 
     public function __construct() {
         $host = getenv('DB_HOST')?: '127.0.0.1';
-        $dbname = getenv('DB_NAME');
-        $username = getenv('DB_USER');
-        $password = getenv('DB_PASS');
+        $dbname = getenv('DB_NAME')?: 'welcometraining';
+        $username = getenv('DB_USER')?: 'root';
+        $password = getenv('DB_PASS')?: 'Pokemon!!72380';
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
