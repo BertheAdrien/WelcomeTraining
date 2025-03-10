@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="mt-3 text-center">
-                    <a href="pages/Signup.php">Créer un compte</a>
+                    <a href="../pages/Signup.php">Créer un compte</a>
                 </div>
             </div>
         </div>
