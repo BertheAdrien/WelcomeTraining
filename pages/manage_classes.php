@@ -6,10 +6,10 @@ include_once '../include/pdo.php';
 include_once '../classes/ClassManager.php';
 
 // Instancier le gestionnaire de classes
-// $classManager = new ClassManager($pdo);
+$classManager = new ClassManager($pdo);
 
-// // Récupérer toutes les classes
-// $classes = $classManager->getAllClasses();
+// Récupérer toutes les classes
+$classes = $classManager->getAllClasses();
 ?>
 
 <body class="bg-light">
