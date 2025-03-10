@@ -7,22 +7,22 @@ class ClassManager {
         $this->pdo = $pdo;
     }
 
-    // 🔹 Récupérer toutes les classes
-    public function getAllClasses(): array {
-        $stmt = $this->pdo->prepare("SELECT * FROM class");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // // 🔹 Récupérer toutes les classes
+    // public function getAllClasses(): array {
+    //     $stmt = $this->pdo->prepare("SELECT * FROM class");
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
+
+    // 🔹 Ajouter une nouvelle classe
+    public function addClass(string $className): bool {
+        $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
+        return $stmt->execute(['className' => $className]);
     }
 
-    // // 🔹 Ajouter une nouvelle classe
-    // public function addClass(string $className): bool {
-    //     $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
-    //     return $stmt->execute(['className' => $className]);
-    // }
-
-    // // 🔹 Supprimer une classe
-    // public function deleteClass(int $classId): bool {
-    //     $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :classId");
-    //     return $stmt->execute(['classId' => $classId]);
-    // }
+    // 🔹 Supprimer une classe
+    public function deleteClass(int $classId): bool {
+        $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :classId");
+        return $stmt->execute(['classId' => $classId]);
+    }
 }
