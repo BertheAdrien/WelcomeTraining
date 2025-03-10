@@ -1,3 +1,4 @@
 <?php
 
-include('pages/Login.php');
+header("Location: pages/Login.php");
+exit();
