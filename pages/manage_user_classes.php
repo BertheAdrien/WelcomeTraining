@@ -5,8 +5,8 @@ include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
 include_once('../controllers/UserController.php');
 
-$userManager = new UserManager($pdo);
-$userController = new UserController($userManager);
+// $userManager = new UserManager($pdo);
+// $userController = new UserController($userManager);
 
 // Récupérer l'ID de l'utilisateur depuis l'URL
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
@@ -24,7 +24,7 @@ $userClasses = $userController->getUserClasses($userId);
 if (isset($_POST['add_class'])) {
     $classId = $_POST['class_id'];
     $userController->addUserClass($userId, $classId);
-    header("Location: manage_user_classes.php?user_id=$userId");
+    header("Location: ../pages/manage_user_classes.php?user_id=$userId");
     exit();
 }
 
@@ -32,7 +32,7 @@ if (isset($_POST['add_class'])) {
 if (isset($_POST['delete_class'])) {
     $classId = $_POST['class_id'];
     $userController->deleteUserClass($userId, $classId);
-    header("Location: manage_user_classes.php?user_id=$userId");
+    header("Location: ../pages/manage_user_classes.php?user_id=$userId");
     exit();
 }
 ?>
@@ -75,7 +75,7 @@ if (isset($_POST['delete_class'])) {
             </div>
         </form>
 
-        <a href="admin_users.php" class="btn btn-secondary">Retour</a>
+        <a href="../pages/admin_users.php" class="btn btn-secondary">Retour</a>
     </div>
 </body>
 </html>
