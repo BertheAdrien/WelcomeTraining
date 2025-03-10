@@ -15,15 +15,15 @@ class ClassManager
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // // 🔹 Ajouter une nouvelle classe
-    // public function addClass(string $className): bool {
-    //     $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
-    //     return $stmt->execute(['className' => $className]);
-    // }
+    // 🔹 Ajouter une nouvelle classe
+    public function addClass(string $className): bool {
+        $stmt = $this->pdo->prepare("INSERT INTO class (ClassName) VALUES (:className)");
+        return $stmt->execute(['className' => $className]);
+    }
 
-    // // 🔹 Supprimer une classe
-    // public function deleteClass(int $classId): bool {
-    //     $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :idClasse");
-    //     return $stmt->execute(['idClasse' => $classId]);
-    // }
+    // 🔹 Supprimer une classe
+    public function deleteClass(int $classId): bool {
+        $stmt = $this->pdo->prepare("DELETE FROM class WHERE idClasse = :idClasse");
+        return $stmt->execute(['idClasse' => $classId]);
+    }
 }
