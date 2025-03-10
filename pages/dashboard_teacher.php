@@ -8,9 +8,6 @@ $idUser = $_SESSION['idUser'];
 $teacherManager = new TeacherManager($pdo);
 $courses = $teacherManager->getTodayTeacherCourses($idUser);
 
-$now = time();
-echo $now;
-$isCurrentCourse = ($now >= $startTime && $now <= $endTime);
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +34,9 @@ $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
         <?php foreach ($courses as $course): 
             $startTime = strtotime($course['StartDateTime']);
             $endTime = strtotime($course['EndDateTime']);
+            $now = date('Y-m-d H:i:s', time());
+            $isCurrentCourse = ($now >= $startTime && $now <= $endTime);
+
         ?>
         <div class="col-12 d-flex justify-content-center">
             <div class="card shadow-sm cours-bloc" style="max-width: 400px; width: 100%;">
