@@ -6,10 +6,10 @@ include_once '../include/pdo.php';
 include_once '../classes/ClassManager.php';
 
 // Instancier le gestionnaire de classes
-$classManager = new ClassManager($pdo);
+// $classManager = new ClassManager($pdo);
 
-// Récupérer toutes les classes
-$classes = $classManager->getAllClasses();
+// // Récupérer toutes les classes
+// $classes = $classManager->getAllClasses();
 ?>
 
 <body class="bg-light">
@@ -18,7 +18,7 @@ $classes = $classManager->getAllClasses();
 
         <!-- Formulaire pour ajouter une classe -->
         <h2 class="mt-4">Ajouter une nouvelle classe</h2>
-        <form method="POST" action="#" class="d-flex mb-4">
+        <form method="POST" action="../actions/class_actions.php" class="d-flex mb-4">
             <input type="text" name="class_name" class="form-control me-2" placeholder="Nom de la nouvelle classe" required>
             <button type="submit" name="add_class" class="btn btn-primary">Ajouter</button>
         </form>
@@ -41,7 +41,7 @@ $classes = $classManager->getAllClasses();
                             </a>
                         </td>
                         <td>
-                            <form method="POST" action="#" style="display:inline-block;">
+                            <form method="POST" action="../actions/class_actions.php" style="display:inline-block;">
                                 <input type="hidden" name="class_id" value="<?php echo $class['idClasse']; ?>">
                                 <button type="submit" name="delete_class" class="btn btn-danger">✖</button>
                             </form>
