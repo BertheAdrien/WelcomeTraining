@@ -46,7 +46,7 @@ var_dump($courses);
                     <h5 class="card-text">Classe : <?php echo htmlspecialchars($course['ClassName']); ?></h5>
 
                     <?php if ($isCurrentCourse): ?>
-                        <a href="gestion_presence.php?courseId=<?php echo $course['idCourse']; ?>" 
+                        <a href="../pages/gestion_presence.php?courseId=<?php echo $course['idCourse']; ?>" 
                            class="btn btn-primary w-100 mt-3">
                             Gérer les présences
                         </a>
