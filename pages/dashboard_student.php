@@ -10,12 +10,6 @@ $classes = $userManager->getUserClasses($_SESSION['idUser']);
 
 $classID = $classes[0]['idClasse'];
 
-if ($classID) {
-    echo $classID;
-} else {
-    echo "Aucune classe associée à ce compte.";
-}
-
 $currentDate = date('Y-m-d');
 $currentDateTime = date('Y-m-d H:i:s');
 
@@ -24,9 +18,6 @@ $courseManager = new Course($pdo);
 
 // Récupération des cours de la journée
 $courses = $courseManager->getCoursesForClass($classID, $currentDate, $currentDateTime);
-
-var_dump($courses);
-
 
 ?>
 
