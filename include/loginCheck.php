@@ -4,9 +4,6 @@ include_once '../include/Config.php';
 include_once '../include/pdo.php';
 include_once '../classes/UserManager.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['Email'];
