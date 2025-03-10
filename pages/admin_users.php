@@ -1,12 +1,12 @@
 <?php
 include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
-// include_once('../controllers/UserController.php');
+include_once('../controllers/UserController.php');
 include_once('../partials/header.php');
 
 
 $userManager = new UserManager($pdo);
-// $userController = new UserController($userManager);
+$userController = new UserController($userManager);
 
 // $search = isset($_POST['search']) ? $_POST['search'] : '';
 // $users = $userController->searchUsers($search);
