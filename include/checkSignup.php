@@ -1,7 +1,8 @@
 <?php
 include_once 'Config.php'; // Vérifiez que $pdo est correctement configuré ici
-include_once 'classes/user.php';
+include_once 'classes/User.php';
 include_once('include/pdo.php');
+include_once('classes/UserManager.php');
 
 
 // Vérification si le formulaire est soumis
@@ -18,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div class='alert alert-danger'>L'adresse e-mail est invalide.</div>";
     } else {
         // Instance de la classe User
-        $user = new User($pdo);
+        $userManager = new UserManager($pdo);
 
         // Création de l'utilisateur
-        if ($user->createUser($nom, $prenom, $email, $motdepasse)) {
+        if ($userManager->createUser($nom, $prenom, $email, $motdepasse)) {
             // Si réussi, redirection vers la page de connexion
             header("Location: Login.php?success=1");
             exit();
