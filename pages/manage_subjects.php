@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <select class="form-select" name="class_id" id="classSelect" required>
                                 <!-- Options des classes seront ajoutées ici via PHP -->
                                 <?php
-                                $classes = $pdo->query("SELECT idClasse, ClassName FROM Class")->fetchAll(PDO::FETCH_ASSOC);
+                                $classes = $pdo->query("SELECT idClasse, ClassName FROM class")->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($classes as $class) {
                                     echo "<option value='{$class['idClasse']}'>{$class['ClassName']}</option>";
                                 }
