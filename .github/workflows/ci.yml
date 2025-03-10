@@ -20,5 +20,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
-            git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
+            sudo git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
             sudo git pull
