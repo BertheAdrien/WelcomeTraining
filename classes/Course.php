@@ -12,7 +12,7 @@ class Course
     public function getCoursesForClass($classId, $currentDate, $currentDateTime)
     {
         $query = "SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime
-                  FROM Subject s
+                  FROM subject s
                   JOIN course sc ON s.idSubject = sc.SubjectID
                   WHERE sc.classID = :classID 
                   AND DATE(sc.StartDateTime) = :currentDate
