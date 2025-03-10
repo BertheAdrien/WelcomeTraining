@@ -6,7 +6,7 @@ include_once('../include/pdo.php');
 function redirectWithMessage($message, $type = 'success') {
     $_SESSION['message'] = $message;
     $_SESSION['message_type'] = $type;
-    header('Location: manage_subjects.php');
+    header('Location: ../pages/manage_subjects.php');
     exit();
 }
 
@@ -36,7 +36,7 @@ function addSubject($subjectName) {
     global $pdo;
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO Subject (SubName) VALUES (:subject_name)");
+        $stmt = $pdo->prepare("INSERT INTO subject (SubName) VALUES (:subject_name)");
         $stmt->bindParam(':subject_name', $subjectName);
         $stmt->execute();
         redirectWithMessage('La matière a été ajoutée avec succès.');
@@ -50,7 +50,7 @@ function deleteSubject($subjectId) {
     global $pdo;
 
     try {
-        $stmt = $pdo->prepare("DELETE FROM Subject WHERE idSubject = :subject_id");
+        $stmt = $pdo->prepare("DELETE FROM subject WHERE idSubject = :subject_id");
         $stmt->bindParam(':subject_id', $subjectId);
         $stmt->execute();
         redirectWithMessage('La matière a été supprimée avec succès.');
@@ -65,7 +65,7 @@ function assignCourse($subjectId, $classId, $teacherId, $startDateTime, $endDate
 
     try {
         $stmt = $pdo->prepare(
-            "INSERT INTO Course (SubjectID, ClassID, TeacherID, StartDateTime, EndDateTime) 
+            "INSERT INTO course (SubjectID, ClassID, TeacherID, StartDateTime, EndDateTime) 
             VALUES (:subject_id, :class_id, :teacher_id, :start_datetime, :end_datetime)"
         );
         $stmt->bindParam(':subject_id', $subjectId);
