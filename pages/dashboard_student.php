@@ -8,7 +8,13 @@ include_once('../classes/UserManager.php');
 $userManager = new UserManager($pdo);
 $classes = $userManager->getUserClasses($_SESSION['idUser']);
 
-$classID = $classes[0]['idClasse'];
+if (empty($classes)) {
+    $classID = null;
+    $className = null;
+} else {
+    $classID = $classes[0]['idClasse'];
+    $className = $classes[0]['ClassName'];
+}
 
 $currentDate = date('Y-m-d');
 $currentDateTime = date('Y-m-d H:i:s');
