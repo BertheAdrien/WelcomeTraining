@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userManager = new UserManager($pdo, $email);
 
         // Création de l'utilisateur
-        if ($userManager->createUser($nom, $prenom, $email, $motdepasse)) {
+        if ($userManager->createUser($nom, $prenom, $motdepasse)) {
             // Si réussi, redirection vers la page de connexion
             header("Location: ../pages/Login.php?success=1");
             exit();

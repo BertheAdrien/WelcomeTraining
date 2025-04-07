@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['motdepasse'];
 
     $userManager = new UserManager($pdo, $email);
-    $user = $userManager->loginUser($email, $password);
+    $user = $userManager->loginUser($password);
 
     if ($user) {
         $_SESSION['idUser'] = $user['idUser'];
