@@ -3,7 +3,7 @@ include_once '../include/pdo.php';
 include_once '../classes/UserManager.php';
 include_once '../controllers/UserController.php';
 
-$userManager = new UserManager($pdo);
+$userManager = new UserManager($pdo, $_SESSION['email']);
 $userController = new UserController($userManager);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
