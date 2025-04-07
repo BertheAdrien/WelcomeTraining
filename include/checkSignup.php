@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div class='alert alert-danger'>L'adresse e-mail est invalide.</div>";
     } else {
         // Instance de la classe User
-        $userManager = new UserManager($pdo);
+        $userManager = new UserManager($pdo, $email);
 
         // Création de l'utilisateur
         if ($userManager->createUser($nom, $prenom, $email, $motdepasse)) {

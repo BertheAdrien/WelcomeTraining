@@ -5,7 +5,7 @@ include_once('../include/pdo.php');
 include_once('../classes/Course.php');
 include_once('../classes/UserManager.php');
 
-$userManager = new UserManager($pdo);
+$userManager = new UserManager($pdo, $_SESSION['email']);
 $classes = $userManager->getUserClasses($_SESSION['idUser']);
 
 if (empty($classes)) {

@@ -4,7 +4,7 @@ include_once('../partials/header.php');
 include_once('../include/pdo.php');
 include_once('../classes/UserManager.php');
 
-$userManager = new UserManager($pdo);
+$userManager = new UserManager($pdo, $_SESSION['email']);
 
 // Récupérer l'ID de l'utilisateur depuis l'URL
 $userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;

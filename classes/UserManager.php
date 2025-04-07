@@ -1,14 +1,16 @@
 <?php
 class UserManager {
     private $pdo;
+    private $email;
 
-    public function __construct($pdo) {
+    public function __construct($pdo, $email) {
         $this->pdo = $pdo;
+        $this->email = $email;
     }
 
-    public function getUserByEmail($email) {
+    public function getUserByEmail() {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE Email = :email");
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':email', $this->email);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -21,21 +23,21 @@ class UserManager {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function createUser($lastName, $firstName, $email, $password) {
+    public function createUser($lastName, $firstName, $password) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO user (LastName, FirstName, Email, Password) VALUES (:lastName, :firstName, :email, :password)");
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':firstName', $firstName);
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':password', $hashedPassword);
         return $stmt->execute();
     }
 
-    public function updateUser($userId, $lastName, $firstName, $email, $status) {
+    public function updateUser($userId, $lastName, $firstName, $status) {
         $stmt = $this->pdo->prepare("UPDATE user SET LastName = :lastName, FirstName = :firstName, Email = :email, Status = :status WHERE idUser = :userId");
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':firstName', $firstName);
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':userId', $userId);
         return $stmt->execute();
@@ -112,10 +114,10 @@ class UserManager {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function loginUser($email, $password) {
+    public function loginUser($password) {
         $query = "SELECT idUser, FirstName, LastName, Password, Status FROM user WHERE Email = :email";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 

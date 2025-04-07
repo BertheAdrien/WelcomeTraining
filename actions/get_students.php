@@ -9,7 +9,7 @@ if (isset($_POST['class_id'])) {
     $classId = $_POST['class_id'];
 
     // Initialiser les classes UserManager et UserController
-    $userManager = new UserManager($pdo);
+    $userManager = new UserManager($pdo, $_SESSION['email']);
     $userController = new UserController($userManager);
 
     // Récupérer les étudiants associés à la classe via le contrôleur

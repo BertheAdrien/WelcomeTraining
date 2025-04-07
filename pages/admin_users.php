@@ -5,7 +5,7 @@ include_once('../controllers/UserController.php');
 include_once('../partials/header.php');
 
 
-$userManager = new UserManager($pdo);
+$userManager = new UserManager($pdo, $email);
 $userController = new UserController($userManager);
 
 $search = isset($_POST['search']) ? $_POST['search'] : '';
