@@ -7,7 +7,7 @@ class Database {
         $host = 'localhost';
         $dbname = 'welcometraining';
         $username = 'root';
-        $password = 'Pokemon!!72380';
+        $password = '';
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
