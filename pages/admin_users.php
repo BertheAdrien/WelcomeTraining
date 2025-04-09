@@ -50,7 +50,7 @@ $users = $userController->searchUsers($search);
                                 <input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($user['FirstName']); ?>">
                             </td>
                             <td>
-                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['Email']); ?>">
+                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>">
                             </td>
                             <td>
                                 <select name="status" class="form-select">
