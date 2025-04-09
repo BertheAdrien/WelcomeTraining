@@ -33,11 +33,11 @@ class UserManager {
         return $stmt->execute();
     }
 
-    public function updateUser($userId, $lastName, $firstName, $status) {
+    public function updateUser($userId, $lastName, $firstName, $email, $status) {
         $stmt = $this->pdo->prepare("UPDATE user SET LastName = :lastName, FirstName = :firstName, Email = :email, Status = :status WHERE idUser = :userId");
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':firstName', $firstName);
-        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':userId', $userId);
         return $stmt->execute();
@@ -127,4 +127,3 @@ class UserManager {
         return false; // Mauvais identifiants
     }
 }
-
