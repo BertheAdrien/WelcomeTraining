@@ -17,7 +17,7 @@
     <div class="container py-4">
         <div class="row justify-content-center mb-5">
             <div class="col-md-6 col-lg-4">
-                <h1 class="text-center mb-4">Connexion WelcomeTraining</h1>
+                <h1 class="text-center mb-4">Connexion</h1>
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <form action="" method="POST">
