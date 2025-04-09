@@ -10,8 +10,8 @@ class UserController {
         return $this->userManager->getUsers($search);
     }
 
-    public function updateUser($userId, $lastName, $firstName, $email, $status, $newEmail) {
-        return $this->userManager->updateUser($userId, $lastName, $firstName, $email, $status, $newEmail);
+    public function updateUser($userId, $lastName, $firstName, $email, $status) {
+        return $this->userManager->updateUser($userId, $lastName, $firstName, $email, $status);
     }
 
     public function deleteUser($userId) {
