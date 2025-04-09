@@ -8,7 +8,7 @@ $userController = new UserController($userManager);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['update_user'])) {
-        $userController->updateUser($_POST['user_id'], $_POST['last_name'], $_POST['first_name'], $_POST['email'], $_POST['status']);
+        $userController->updateUser($_POST['user_id'], $_POST['last_name'], $_POST['first_name'], $_POST['Email'], $_POST['status']);
     }
 
     if (isset($_POST['delete_user'])) {
