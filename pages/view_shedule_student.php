@@ -4,6 +4,7 @@ $title = 'Agenda';
 include_once('../partials/header.php');     
 include_once('../include/Config.php');
 include_once('../include/pdo.php');
+include_once('../classes/UserManager.php');
 
 $isStudent = $_SESSION['user_status'] === 'Student';
 $userManager = new UserManager($pdo, $_SESSION['email']);
