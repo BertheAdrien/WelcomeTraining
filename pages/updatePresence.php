@@ -27,7 +27,7 @@ try {
         foreach ($presentStudents as $studentId) {
             // Vérifier si une entrée existe
             $stmt = $pdo->prepare("
-                SELECT id FROM course_attendance 
+                SELECT idCourseAttendance FROM course_attendance 
                 WHERE course_id = ? AND student_id = ?
             ");
             $stmt->execute([$courseId, $studentId]);
