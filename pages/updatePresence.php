@@ -55,7 +55,8 @@ try {
     header('Location: gestion_presence.php?courseId=' . $courseId . '&success=1');
 } catch (Exception $e) {
     $pdo->rollBack();
-    error_log('Erreur dans gestion_presence_process: ' . $e->getMessage());
-    header('Location: gestion_presence.php?courseId=' . $courseId . '&error=1');
+    $errorMessage = urlencode($e->getMessage());
+    header('Location: gestion_presence.php?courseId=' . $courseId . '&error=1&message=' . $errorMessage);
+    exit();
 }
 ?>
