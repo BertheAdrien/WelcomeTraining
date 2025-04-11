@@ -1,5 +1,4 @@
 <?php
-// saveSignature.php
 
 session_start();
 require_once 'include/Config.php';
@@ -37,12 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Générer un nom de fichier unique
         $filename = 'signature_' . $studentId . '_' . $courseId . '_' . time() . '.png';
-        $filepath = 'signatures/' . $filename;
+        $filepath = '../signatures/' . $filename;
         
         // Sauvegarder l'image
         file_put_contents($filepath, $imageData);
 
-        // Mettre à jour la base de données
         $stmt = $pdo->prepare("
             UPDATE course_attendance 
             SET signature_path = ?, 
@@ -62,5 +60,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     http_response_code(405);
-    echo json_encode(['error' => 'Méthode non autorisée']);
+    echo json_encode(['error' => 'Méthode non autorisée pour la signature']);
 }
