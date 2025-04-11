@@ -19,9 +19,6 @@ if (empty($classes)) {
 }
 
 $userId = $_SESSION['idUser'];  // Identifiant de l'utilisateur connecté
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
 
 // Requête pour récupérer les cours de l'élève dans sa classe
 $query = "SELECT s.SubName, CONCAT(u.FirstName, ' ', u.LastName) as TeacherName, c.ClassName, sc.StartDateTime, sc.EndDateTime 
