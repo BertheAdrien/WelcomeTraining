@@ -6,11 +6,8 @@ include_once('../include/Config.php');
 include_once('../include/pdo.php');
 
 $isStudent = $_SESSION['user_status'] === 'Student';
-$classID = $_SESSION['class_id'];  // Récupérer le classID de l'élève depuis la session
+$classID = $_SESSION['idClasse'];  // Récupérer le classID de l'élève depuis la session
 $userId = $_SESSION['idUser'];  // Identifiant de l'utilisateur connecté
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
 
 // Requête pour récupérer les cours de l'élève dans sa classe
 $query = "SELECT s.SubName, CONCAT(u.FirstName, ' ', u.LastName) as TeacherName, c.ClassName, sc.StartDateTime, sc.EndDateTime 
