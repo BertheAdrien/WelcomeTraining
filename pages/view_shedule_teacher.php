@@ -4,6 +4,7 @@ $title = 'Agenda';
 include_once('../partials/header.php');     
 include_once('../include/Config.php');
 include_once('../include/pdo.php');
+
 // Vérification si l'utilisateur est un professeur
 if ($_SESSION['user_status'] !== 'Prof') {
     die('Accès non autorisé'); // Optionnel : Empêcher l'accès aux non-professeurs
