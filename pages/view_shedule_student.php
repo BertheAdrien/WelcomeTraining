@@ -6,7 +6,17 @@ include_once('../include/Config.php');
 include_once('../include/pdo.php');
 
 $isStudent = $_SESSION['user_status'] === 'Student';
-$classID = $_SESSION['idClasse'];  // Récupérer le classID de l'élève depuis la session
+$userManager = new UserManager($pdo, $_SESSION['email']);
+$classes = $userManager->getUserClasses($_SESSION['idUser']);
+
+if (empty($classes)) {
+    $classID = null;
+    $className = null;
+} else {
+    $classID = $classes[0]['idClasse'];
+    $className = $classes[0]['ClassName'];
+}
+
 $userId = $_SESSION['idUser'];  // Identifiant de l'utilisateur connecté
 echo "<pre>";
 print_r($_SESSION);
