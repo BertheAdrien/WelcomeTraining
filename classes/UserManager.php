@@ -8,6 +8,7 @@ class UserManager {
         $this->email = $email;
     }
 
+    //Récupère un utilisateur par son email
     public function getUserByEmail() {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE Email = :email");
         $stmt->bindParam(':email', $this->email);
@@ -15,6 +16,7 @@ class UserManager {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    //Récupère tous les utilisateurs
     public function getUsers($search = '') {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE LastName LIKE :search OR FirstName LIKE :search OR Email LIKE :search");
         $searchParam = '%' . $search . '%';
@@ -23,6 +25,7 @@ class UserManager {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Créer un utilisateur
     public function createUser($lastName, $firstName, $password) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->pdo->prepare("INSERT INTO user (LastName, FirstName, Email, Password) VALUES (:lastName, :firstName, :email, :password)");
@@ -33,6 +36,7 @@ class UserManager {
         return $stmt->execute();
     }
 
+    //Mise à jour d'un utilisateur
     public function updateUser($userId, $lastName, $firstName, $email, $status) {
         $stmt = $this->pdo->prepare("UPDATE user SET LastName = :lastName, FirstName = :firstName, Email = :email, Status = :status WHERE idUser = :userId");
         $stmt->bindParam(':lastName', $lastName);
@@ -43,23 +47,28 @@ class UserManager {
         return $stmt->execute();
     }
 
+    //Supprime un utilisateur
     public function deleteUser($userId) {
         $stmt = $this->pdo->prepare("DELETE FROM user WHERE idUser = :userId");
         $stmt->bindParam(':userId', $userId);
         return $stmt->execute();
     }
+    
+    //Récupère un utilisateur par son id
     public function getUserById($userId) {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE idUser = :userId");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    
+    //Récupère toutes les classes
     public function getAllClasses() {
         $stmt = $this->pdo->query("SELECT * FROM class");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Récupère les classes d'un utilisateur 
     public function getUserClasses($userId) {
         $stmt = $this->pdo->prepare("
             SELECT class.idClasse, class.ClassName 
@@ -72,6 +81,7 @@ class UserManager {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Ajoute une classe à un utilisateur
     public function addUserClass($userId, $classId) {
         // Vérifier si la classe est déjà associée à l'utilisateur
         $checkStmt = $this->pdo->prepare("
@@ -93,7 +103,8 @@ class UserManager {
 
         return false;
     }
-
+    
+    //Supprime une classe d'un utilisateur
     public function deleteUserClass($userId, $classId) {
         $stmt = $this->pdo->prepare("
             DELETE FROM user_has_class WHERE User_idUser = :userId AND Class_idClasse = :classId
@@ -103,6 +114,7 @@ class UserManager {
         return $stmt->execute();
     }
 
+    //Récupère les étudiants d'une classe
     public function getStudentsByClass($classId) {
         $stmt = $this->pdo->prepare("SELECT u.FirstName, u.LastName, u.Email 
                                      FROM user u
@@ -114,6 +126,7 @@ class UserManager {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Connecte un utilisateur
     public function loginUser($password) {
         $query = "SELECT idUser, FirstName, LastName, Password, Status FROM user WHERE Email = :email";
         $stmt = $this->pdo->prepare($query);

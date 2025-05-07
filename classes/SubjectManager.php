@@ -31,7 +31,7 @@ class SubjectManager {
         }
     }
 
-    // Fonction pour affecter un cours à une matière
+    // Fonction pour affecter un cours à une matière, classe et prof
     public function assignCourse($subjectId, $classId, $teacherId, $startDateTime, $endDateTime) {
         try {
             // Préparer la requête d'insertion

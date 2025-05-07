@@ -5,6 +5,7 @@ class TeacherManager {
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
+    //Récupère les cours d'un prof
 
     public function getTodayTeacherCourses($teacherId) {
         $currentDate = date('Y-m-d');

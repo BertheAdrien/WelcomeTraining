@@ -9,6 +9,7 @@ class Course
         $this->pdo = $pdo;
     }
 
+    //Récupère les cours pour une classe
     public function getCoursesForClass($classId, $currentDate, $currentDateTime)
     {
         $query = "SELECT sc.idCourse, s.SubName, sc.StartDateTime, sc.EndDateTime
@@ -36,6 +37,7 @@ class Course
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    //Récupère les étudiants d'un cours
     public function getStudentsByCourse(int $courseId): array {
         $query = "
             SELECT u.idUser, u.FirstName, u.LastName, 
