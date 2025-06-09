@@ -2,6 +2,9 @@
 include_once '../include/pdo.php';
 include_once '../classes/UserManager.php';
 include_once '../controllers/UserController.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $userManager = new UserManager($pdo, $_SESSION['email']);
 $userController = new UserController($userManager);
