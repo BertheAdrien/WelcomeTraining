@@ -26,6 +26,32 @@ $users = $userController->searchUsers($search);
             </div>
         </form>
 
+        <!-- Formulaire de création d'utilisateur -->
+        <form method="POST" action="../actions/user_actions_handler.php" class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <input type="text" name="last_name" class="form-control" placeholder="Nom" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="first_name" class="form-control" placeholder="Prénom" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="col-md-2">
+                    <select name="status" class="form-select">
+                        <option value="Student">Student</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Prof">Prof</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" name="create_user" class="btn btn-success w-100">Créer</button>
+                </div>
+            </div>
+        </form>
+
+
         <!-- Liste des utilisateurs -->
         <table class="table table-bordered">
             <thead>

@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userController->deleteUser($_POST['user_id']);
     }
 
+    if (isset($_POST['create_user'])) {
+        $userController->createUser($_POST['last_name'], $_POST['first_name'], $_POST['email'], $_POST['status']);
+    }
+
     header('Location: ../pages/admin_users.php');
     exit();
 }

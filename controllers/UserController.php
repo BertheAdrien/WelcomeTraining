@@ -17,6 +17,11 @@ class UserController {
     public function deleteUser($userId) {
         return $this->userManager->deleteUser($userId);
     }
+
+    public function createUser($lastName, $firstName, $email, $status) {
+        return $this->userManager->createUser($lastName, $firstName, $email, $status);
+    }
+
     public function getUserById($userId) {
         return $this->userManager->getUserById($userId);
     }
